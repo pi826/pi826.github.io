@@ -1,0 +1,59 @@
+---
+title: "サンプル記事：中間値の定理"
+date: 2026-07-08
+tags: ["解析学", "サンプル"]
+description: "KaTeX数式・定理環境・TikZ図（tex2svg変換）の動作確認用サンプル記事です。"
+draft: false
+---
+
+このページは、数式表示（KaTeX）・定理環境コンポーネント・TikZ図の埋め込みが正しく動作するかを確認するためのサンプル記事です。
+
+## 連続関数と中間値の定理
+
+区間 $[a, b]$ 上で定義された実数値関数 $f$ について、次のように連続性を定義する。
+
+<Definition title="連続性">
+  関数 $f : [a, b] \to \mathbb{R}$ が点 $x_0 \in [a, b]$ で**連続**であるとは、任意の $\varepsilon > 0$ に対してある $\delta > 0$ が存在し、
+
+  $$
+  |x - x_0| < \delta \implies |f(x) - f(x_0)| < \varepsilon
+  $$
+
+  が成り立つことをいう。$f$ が $[a, b]$ のすべての点で連続であるとき、$f$ は $[a, b]$ 上**連続**であるという。
+</Definition>
+
+連続関数については、次の中間値の定理が成り立つ。
+
+<Theorem title="中間値の定理">
+  関数 $f : [a, b] \to \mathbb{R}$ は連続で、$f(a)$ と $f(b)$ が異符号であるとする。このとき、
+
+  $$
+  f(c) = 0
+  $$
+
+  を満たす $c \in (a, b)$ が存在する。
+</Theorem>
+
+<Proof>
+  一般性を失わず $f(a) < 0 < f(b)$ とする。
+
+  $$
+  S = \{\, x \in [a, b] \mid f(x) \le 0 \,\}
+  $$
+
+  とおくと、$a \in S$ より $S$ は空でなく、また $S$ は上に有界（$b$ が上界）なので、実数の連続性（上限公理）により $c = \sup S$ が存在する。
+
+  $f$ の連続性を用いて $f(c) \le 0$ かつ $f(c) \ge 0$ が示せるので、$f(c) = 0$ である。特に $f(a) < 0$、$f(b) > 0$ より $c \ne a, b$ であり、$c \in (a, b)$ となる。
+</Proof>
+
+下の図は、区間 $[a, b]$ 上で符号を変える連続関数 $f$ と、$f(c) = 0$ となる点 $c$ の様子を模式的に表したものである。
+
+![連続関数 f が区間 [a, b] の間で符号を変え、f(c) = 0 となる点 c が存在する様子を示す図](/figures/sample-article/fig1.svg)
+
+図の TeX ソースは `figures-src/sample-article/fig1.tex` にあり、
+
+```bash
+./scripts/tex2svg.sh figures-src/sample-article/fig1.tex
+```
+
+によって `public/figures/sample-article/fig1.svg` として生成される。

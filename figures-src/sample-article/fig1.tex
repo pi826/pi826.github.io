@@ -1,0 +1,25 @@
+\documentclass[border=2pt]{standalone}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}[scale=1.1]
+  % axes
+  \draw[->] (-0.4,0) -- (4.2,0) node[right] {$x$};
+  \draw[->] (0,-1.6) -- (0,1.8) node[above] {$y$};
+
+  % f(x) = curve crossing zero on [a,b]
+  \draw[thick, domain=0.2:4, samples=100, variable=\x]
+    plot ({\x}, {0.35*(\x-1)*(\x-3)});
+
+  % a, b marks
+  \draw[dashed] (1,0) -- (1,-0.35*2*0);
+  \foreach \x/\lbl in {1/a, 3/b} {
+    \draw (\x,0.05) -- (\x,-0.05) node[below] {$\lbl$};
+  }
+
+  % c and f(c)=0 point
+  \filldraw (2,-0.35) circle (1.6pt);
+  \draw[dashed] (2,-0.35) -- (2,0) node[above] {$c$};
+
+  \node at (3.6,1.4) {$f$};
+\end{tikzpicture}
+\end{document}

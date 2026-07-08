@@ -1,0 +1,74 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  date: Date;
+  description: string;
+  tags: string[];
+}
+
+const { slug, title, date, description, tags } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('ja-JP', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<article class="card">
+  <a href={`/blog/${slug}/`}>
+    <h2>{title}</h2>
+  </a>
+  <p class="meta">
+    <time datetime={date.toISOString()}>{formattedDate}</time>
+    {tags.map((tag) => <span class="tag">{tag}</span>)}
+  </p>
+  <p class="description">{description}</p>
+</article>
+
+<style>
+  .card {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .card:last-child {
+    border-bottom: none;
+  }
+
+  h2 {
+    margin: 0 0 0.4rem;
+    font-size: 1.25rem;
+  }
+
+  .card > a {
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .card > a:hover {
+    color: var(--color-accent);
+  }
+
+  .meta {
+    margin: 0 0 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .tag {
+    background: var(--color-bg-subtle);
+    border-radius: 0.3rem;
+    padding: 0.1rem 0.5rem;
+  }
+
+  .description {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+</style>

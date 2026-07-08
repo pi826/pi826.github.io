@@ -1,0 +1,59 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import 'katex/dist/katex.min.css';
+
+interface Props {
+  title: string;
+  date: Date;
+  tags: string[];
+  description: string;
+}
+
+const { title, date, tags, description } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('ja-JP', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={description}>
+  <article>
+    <header>
+      <h1>{title}</h1>
+      <p class="meta">
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        {tags.map((tag) => <span class="tag">{tag}</span>)}
+      </p>
+    </header>
+    <slot />
+  </article>
+</BaseLayout>
+
+<style>
+  header {
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-sans);
+  }
+
+  .meta {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    align-items: center;
+    font-family: var(--font-sans);
+  }
+
+  .tag {
+    background: var(--color-bg-subtle);
+    border-radius: 0.3rem;
+    padding: 0.1rem 0.5rem;
+  }
+</style>

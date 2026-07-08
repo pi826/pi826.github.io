@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+
+const allPosts = await getCollection('blog');
+const recentPosts = allPosts
+  .filter((post) => !post.data.draft || !import.meta.env.PROD)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 5);
+---
+
+<BaseLayout title="pi826" description="個人ホームページ。数学記事のブログを中心に、自己紹介・研究/業績・作品紹介を掲載しています。">
+  <section class="intro">
+    <h1>pi826</h1>
+    <p>準備中です。後で編集してください。</p>
+  </section>
+
+  <section>
+    <h2>最新記事</h2>
+    {
+      recentPosts.length === 0 ? (
+        <p>まだ記事がありません。</p>
+      ) : (
+        recentPosts.map((post) => (
+          <ArticleCard
+            slug={post.id}
+            title={post.data.title}
+            date={post.data.date}
+            description={post.data.description}
+            tags={post.data.tags}
+          />
+        ))
+      )
+    }
+    <p><a href="/blog/">記事一覧を見る &rarr;</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro {
+    margin-bottom: 3rem;
+  }
+
+  h1 {
+    margin: 0 0 0.5rem;
+  }
+</style>
