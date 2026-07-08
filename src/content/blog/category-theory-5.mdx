@@ -1,0 +1,137 @@
+---
+title: "圏論5：核"
+date: 2026-06-25T01:19:44.000Z
+tags: ["圏論", "zero", "kernel"]
+description: "今回は，zero object，zero morphism，kernel，cokernelについてまとめる．これらは後で加法的な圏やアーベル圏を扱うための基本的な道具である．"
+draft: false
+---
+
+今回は，zero object，zero morphism，kernel，cokernelについてまとめる．これらは後で加法的な圏やアーベル圏を扱うための基本的な道具である．
+
+以下，$\mathcal{C}$ を圏とする．
+
+<Definition>
+  対象 $0\in\mathcal{C}$ が zero object であるとは，$0$ が initial object かつ terminal object であることをいう．
+
+  すなわち，任意の $X\in\mathcal{C}$ に対して，射 $0\to X$ と射 $X\to 0$ がそれぞれただ一つ存在することをいう．
+</Definition>
+
+<Proposition>
+  zero object は，存在すれば同型を除いて一意である．
+</Proposition>
+
+<Definition>
+  $\mathcal{C}$ が zero object $0$ をもつとする．任意の $A,B\in\mathcal{C}$ に対して，合成 $A\to0\to B$ で得られる射を $A$ から $B$ への zero morphism といい，$0_{A,B}:A\to B$ と書く．文脈から明らかなときは単に $0$ と書く．
+</Definition>
+
+<Remark>
+  zero object をもつ圏では，任意の二対象の間に標準的な zero morphism がある．したがって，射 $f:A\to B$ について「$f=0$」という言い方ができる．
+</Remark>
+
+<Proposition>
+  任意の射 $f:X\to A$ と $g:B\to Y$ について，$0_{A,B}\circ f=0_{X,B}$ かつ $g\circ0_{A,B}=0_{A,Y}$ である．
+</Proposition>
+
+<Proof>
+  合成 $0_{A,B}\circ f$ は $X\to A\to0\to B$ で得られる．しかし $X\to A\to0$ は，terminal object $0$ への唯一の射 $X\to0$ に等しい．よって $0_{A,B}\circ f$ は $X\to0\to B$ であり，これは $0_{X,B}$ である．もう一つも同様である．
+</Proof>
+
+<Remark>
+  ${\rm Set}$ では空集合が initial object で，一点集合が terminal object であるから，zero object は存在しない．一方，${\rm Ab}$ や ${\rm Mod}_A$ では零群，零加群が zero object である．
+</Remark>
+
+以下，kernel や cokernel を考える箇所では，$\mathcal{C}$ は zero object をもつと仮定する．
+
+<Definition>
+  $f:A\to B$ を射とする．$f$ の kernel とは，射 $k:K\to A$ であって $f\circ k=0$ を満たし，さらに次の普遍性を満たすものをいう．
+
+  任意の射 $t:T\to A$ で $f\circ t=0$ を満たすものに対して，ただ一つの射 $u:T\to K$ が存在して $t=k\circ u$ となる．
+
+  このとき対象 $K$ を $f$ の kernel 対象といい，${\rm Ker}\,f$ と書く．また，射 $k:K\to A$ を $\ker f$ と書くことが多い．
+</Definition>
+
+図式で書くと，kernel の普遍性は次のようになる．
+
+![可換図式：T から K への破線の射 u、T から A への射 t、K から A への射 k、A から B への射 f](/figures/category-theory-5/fig1.svg)
+
+ここで $f\circ t=0$ であり，$t$ は一意に $K$ を経由する．
+
+<Definition>
+  $f:A\to B$ を射とする．$f$ の cokernel とは，射 $q:B\to Q$ であって $q\circ f=0$ を満たし，さらに次の普遍性を満たすものをいう．
+
+  任意の射 $t:B\to T$ で $t\circ f=0$ を満たすものに対して，ただ一つの射 $u:Q\to T$ が存在して $t=u\circ q$ となる．
+
+  このとき対象 $Q$ を $f$ の cokernel 対象といい，${\rm Coker}\,f$ と書く．また，射 $q:B\to Q$ を ${\rm coker}\,f$ と書くことが多い．
+</Definition>
+
+図式で書くと，cokernel の普遍性は次のようになる．
+
+![可換図式：A から B への射 f、B から Q への射 q、B から T への射 t、Q から T への破線の射 u](/figures/category-theory-5/fig2.svg)
+
+ここで $t\circ f=0$ であり，$t$ は一意に $Q$ を経由する．
+
+<Remark>
+  kernel は，$f$ と zero morphism $0:A\to B$ の equalizer である．cokernel は，$f$ と zero morphism $0:A\to B$ の coequalizer である．
+
+  したがって，kernel は limit の一種であり，cokernel は colimit の一種である．
+</Remark>
+
+<Proposition>
+  kernel と cokernel は，存在すれば一意同型を除いて一意である．
+</Proposition>
+
+<Proof>
+  kernel は equalizer の特別な場合であり，cokernel は coequalizer の特別な場合である．equalizer と coequalizer は，存在すれば一意同型を除いて一意であるから従う．
+</Proof>
+
+<Proposition>
+  kernel 射は mono である．双対的に，cokernel 射は epi である．
+</Proposition>
+
+<Proof>
+  $k:K\to A$ を $f:A\to B$ の kernel とする．射 $u,v:T\to K$ が $k\circ u=k\circ v$ を満たすとする．このとき $k\circ u:T\to A$ は $f$ と合成すると $0$ になる．kernel の普遍性より，$k\circ u$ を経由させる射 $T\to K$ は一意である．$u$ も $v$ もそのような射なので $u=v$ である．よって $k$ は mono である．
+
+  cokernel 射が epi であることは，矢印を逆にした同じ議論で示される．
+</Proof>
+
+<Proposition>
+  $f:A\to B$ が mono ならば，zero morphism $0:0\to A$ は $f$ の kernel である．双対的に，$f$ が epi ならば，zero morphism $B\to0$ は $f$ の cokernel である．
+</Proposition>
+
+<Proof>
+  $f$ を mono とする．まず $f\circ0_{0,A}=0$ である．射 $t:T\to A$ が $f\circ t=0$ を満たすとする．zero morphism $0_{T,A}:T\to A$ も $f\circ0_{T,A}=0$ を満たすので，$f\circ t=f\circ0_{T,A}$ である．$f$ は mono だから $t=0_{T,A}$ である．これは唯一の射 $T\to0$ と zero morphism $0\to A$ の合成なので，$t$ は一意に $0\to A$ を経由する．よって $0\to A$ は $f$ の kernel である．
+
+  epi と cokernel については，矢印をすべて逆にした同じ議論で示される．
+</Proof>
+
+<Remark>
+  一般の zero object をもつ圏では，逆向きの「kernel 対象が $0$ なら mono」は差を取れないため自動ではない．ホモロジー代数で主に使う加法的な圏，特に $A$ 加群の圏やアーベル圏では，$f$ が mono であることと ${\rm Ker}\,f\cong0$ であること，$f$ が epi であることと ${\rm Coker}\,f\cong0$ であることが成り立つ．
+
+  以後，このシリーズで kernel や cokernel を本格的に使うときは，主に加法的な圏，特に $A$ 加群の圏やアーベル圏を念頭に置く．
+</Remark>
+
+<Proposition>
+  zero morphism $0:A\to B$ の kernel は ${\rm id}_A:A\to A$ であり，cokernel は ${\rm id}_B:B\to B$ である．
+</Proposition>
+
+<Proof>
+  まず ${\rm id}_A:A\to A$ について，$0\circ{\rm id}_A=0$ である．任意の $t:T\to A$ について $0\circ t=0$ であり，$t={\rm id}_A\circ t$ である．またこのような分解は明らかに一意である．よって ${\rm id}_A$ は $0:A\to B$ の kernel である．
+
+  cokernel についても同様に，任意の $t:B\to T$ は $t=t\circ{\rm id}_B$ と一意に分解するので，${\rm id}_B$ は $0:A\to B$ の cokernel である．
+</Proof>
+
+<Remark>
+  $A$ を環とする．圏 ${\rm Mod}_A$ では，zero object は零加群 $0$ であり，zero morphism は通常の零準同型である．
+
+  $A$ 加群準同型 $f:M\to N$ の kernel 対象は通常の部分加群 ${\rm Ker}\,f=\{m\in M\mid f(m)=0\}$ であり，kernel 射は包含 ${\rm Ker}\,f\to M$ である．また cokernel 対象は商加群 ${\rm Coker}\,f=N/f(M)$ であり，cokernel 射は自然な商写像 $N\to N/f(M)$ である．
+</Remark>
+
+<Definition>
+  射 $f:A\to B$ が kernel 射であるとは，ある射 $g:B\to C$ が存在して $f$ が $g$ の kernel になることをいう．
+
+  双対的に，射 $f:A\to B$ が cokernel 射であるとは，ある射 $h:D\to A$ が存在して $f$ が $h$ の cokernel になることをいう．
+</Definition>
+
+<Remark>
+  今回は，zero object をもつ圏で定義できる kernel と cokernel の基本事項に留めた．次回以降，ここで定義した道具を使って，加法的な圏やアーベル圏の話に入る．
+</Remark>

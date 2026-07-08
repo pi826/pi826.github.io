@@ -1,0 +1,287 @@
+---
+title: "圏論7：アーベル圏"
+date: 2026-06-26T01:39:05.000Z
+tags: ["圏論", "image", "abelian category"]
+description: "今回は，additive categoryにおけるkernel，cokernel，image，coimage，最後にabelian categoryを定義する．"
+draft: false
+---
+
+今回は，additive categoryにおけるkernel，cokernel，image，coimage，最後にabelian categoryを定義する．
+
+以下，$\mathcal{C}$ を additive category とする．したがって $\mathcal{C}$ には zero object，zero morphism，射の加法，有限 biproduct がある．
+
+<Definition>
+  射 $f:A\to B$ の kernel とは，射 $k:K\to A$ であって $f\circ k=0$ を満たし，任意の射 $t:T\to A$ で $f\circ t=0$ を満たすものに対して，ただ一つの射 $u:T\to K$ が存在して $t=k\circ u$ となるものをいう．
+
+  このとき対象 $K$ を kernel 対象といい，${\rm Ker}\,f$ と書く．射 $k$ を $\ker f:{\rm Ker}\,f\to A$ と書く．
+</Definition>
+
+図式で書くと，kernel の普遍性は次の通りである．
+
+![kernelの普遍性：T から Ker f への破線の射 u、T から A への射 t、Ker f から A への射 ker f、A から B への射 f](/figures/category-theory-7/fig1.svg)
+
+ここで $f\circ t=0$ であり，$t$ は一意に ${\rm Ker}\,f$ を経由する．
+
+<Definition>
+  射 $f:A\to B$ の cokernel とは，射 $q:B\to Q$ であって $q\circ f=0$ を満たし，任意の射 $t:B\to T$ で $t\circ f=0$ を満たすものに対して，ただ一つの射 $u:Q\to T$ が存在して $t=u\circ q$ となるものをいう．
+
+  このとき対象 $Q$ を cokernel 対象といい，${\rm Coker}\,f$ と書く．射 $q$ を ${\rm coker}\,f:B\to{\rm Coker}\,f$ と書く．
+</Definition>
+
+図式で書くと，cokernel の普遍性は次の通りである．
+
+![cokernelの普遍性：A から B への射 f、B から Coker f への射 coker f、B から T への射 t、Coker f から T への破線の射 u](/figures/category-theory-7/fig2.svg)
+
+ここで $t\circ f=0$ であり，$t$ は一意に ${\rm Coker}\,f$ を経由する．
+
+<Proposition>
+  additive category において，kernel をもつ射 $f:A\to B$ について，$f$ が mono であることと ${\rm Ker}\,f\cong0$ であることは同値である．
+
+  双対的に，cokernel をもつ射 $f:A\to B$ について，$f$ が epi であることと ${\rm Coker}\,f\cong0$ であることは同値である．
+</Proposition>
+
+<Proof>
+  まず $f$ を mono とする．第5回で見たように，zero morphism $0:0\to A$ は $f$ の kernel である．kernel は同型を除いて一意なので，${\rm Ker}\,f\cong0$ である．
+
+  逆に ${\rm Ker}\,f\cong0$ とする．射 $u,v:T\to A$ が $f\circ u=f\circ v$ を満たすとする．additive category では差が取れるので
+
+  $$
+  f\circ(u-v)=f\circ u-f\circ v=0
+  $$
+
+  である．したがって $u-v$ は $\ker f:{\rm Ker}\,f\to A$ を経由する．しかし ${\rm Ker}\,f\cong0$ なので，この射は zero morphism である．よって $u-v=0$，すなわち $u=v$ である．したがって $f$ は mono である．
+
+  epi と cokernel については，矢印を逆にした同じ議論で示される．
+</Proof>
+
+<Remark>
+  この命題は，第5回で残していた「kernel 対象が $0$ なら mono」の逆向きを，additive category では差 $u-v$ を使って証明できる，ということである．
+</Remark>
+
+<Definition>
+  射 $f:A\to B$ について，${\rm coker}\,f:B\to{\rm Coker}\,f$ が存在し，さらにそのkernelが存在するとする．
+
+  このとき
+
+  $$
+  {\rm im}\,f:{\rm Im}\,f\to B
+  $$
+
+  を ${\rm coker}\,f$ の kernel として定義する．対象 ${\rm Im}\,f$ を $f$ の image といい，射 ${\rm im}\,f$ を $f$ の image morphism という．
+</Definition>
+
+つまり image は次の図式で定義される．
+
+![imageの定義：Im f から B への射 im f、B から Coker f への射 coker f](/figures/category-theory-7/fig3.svg)
+
+ここで ${\rm im}\,f=\ker({\rm coker}\,f)$ である．
+
+<Definition>
+  射 $f:A\to B$ について，$\ker f:{\rm Ker}\,f\to A$ が存在し，さらにそのcokernelが存在するとする．
+
+  このとき
+
+  $$
+  {\rm coim}\,f:A\to{\rm Coim}\,f
+  $$
+
+  を $\ker f$ の cokernel として定義する．対象 ${\rm Coim}\,f$ を $f$ の coimage といい，射 ${\rm coim}\,f$ を $f$ の coimage morphism という．
+</Definition>
+
+つまり coimage は次の図式で定義される．
+
+![coimageの定義：Ker f から A への射 ker f、A から Coim f への射 coim f](/figures/category-theory-7/fig4.svg)
+
+ここで ${\rm coim}\,f={\rm coker}(\ker f)$ である．
+
+<Remark>
+  記法として，${\rm Im}\,f$，${\rm Coim}\,f$ は対象を表し，${\rm im}\,f$，${\rm coim}\,f$ は射を表す．
+
+  image は $B$ の中に入る対象であり，coimage は $A$ から出ていく対象である．
+</Remark>
+
+<Proposition>
+  image morphism ${\rm im}\,f:{\rm Im}\,f\to B$ は mono であり，coimage morphism ${\rm coim}\,f:A\to{\rm Coim}\,f$ は epi である．
+</Proposition>
+
+<Proof>
+  ${\rm im}\,f$ は kernel 射なので mono である．また ${\rm coim}\,f$ は cokernel 射なので epi である．
+</Proof>
+
+<Proposition>
+  image と coimage が存在するとき，$f$ は自然に image と coimage を経由する．
+</Proposition>
+
+<Proof>
+  まず image について見る．${\rm coker}\,f\circ f=0$ であり，${\rm im}\,f$ は ${\rm coker}\,f$ の kernel である．したがって kernel の普遍性により，ただ一つの射 $a:A\to{\rm Im}\,f$ が存在して
+
+  $$
+  f={\rm im}\,f\circ a
+  $$
+
+  となる．図式では次のようになる．
+
+  ![imageを経由する分解：A から Coker f への射 f と coker f、A から Im f への破線の射 a、Im f から B への射 im f](/figures/category-theory-7/fig5.svg)
+
+  次に coimage について見る．$f\circ\ker f=0$ であり，${\rm coim}\,f$ は $\ker f$ の cokernel である．したがって cokernel の普遍性により，ただ一つの射 $b:{\rm Coim}\,f\to B$ が存在して
+
+  $$
+  f=b\circ{\rm coim}\,f
+  $$
+
+  となる．図式では次のようになる．
+
+  ![coimageを経由する分解：Ker f から A への射 ker f、A から Coim f への射 coim f、A から B への射 f、Coim f から B への破線の射 b](/figures/category-theory-7/fig6.svg)
+</Proof>
+
+<Proposition>
+  image と coimage が存在するとき，自然な射
+
+  $$
+  \gamma_f:{\rm Coim}\,f\to{\rm Im}\,f
+  $$
+
+  が存在する．
+</Proposition>
+
+<Proof>
+  上の証明で得た射 $b:{\rm Coim}\,f\to B$ を使う．${\rm coker}\,f\circ f=0$ かつ $f=b\circ{\rm coim}\,f$ なので
+
+  $$
+  ({\rm coker}\,f)\circ b\circ{\rm coim}\,f=0
+  $$
+
+  である．${\rm coim}\,f$ は cokernel 射だから epi である．よって
+
+  $$
+  ({\rm coker}\,f)\circ b=0
+  $$
+
+  である．
+
+  いま ${\rm im}\,f:{\rm Im}\,f\to B$ は ${\rm coker}\,f$ の kernel であるから，$b$ は一意に ${\rm Im}\,f$ を経由する．すなわち，ただ一つの射 $\gamma_f:{\rm Coim}\,f\to{\rm Im}\,f$ が存在して
+
+  $$
+  b={\rm im}\,f\circ\gamma_f
+  $$
+
+  となる．
+</Proof>
+
+この射 $\gamma_f$ を使うと，$f$ は次のように分解される．
+
+![f の分解：A から Coim f への射 coim f、Coim f から Im f への射 gamma_f、Im f から B への射 im f](/figures/category-theory-7/fig7.svg)
+
+すなわち
+
+$$
+f={\rm im}\,f\circ\gamma_f\circ{\rm coim}\,f
+$$
+
+である．
+
+<Proposition>
+  image と coimage が存在する射 $f:A\to B$ について，$f=0$ であることと ${\rm Im}\,f\cong0$ であることは同値である．また，$f=0$ であることと ${\rm Coim}\,f\cong0$ であることも同値である．
+</Proposition>
+
+<Proof>
+  $f=0$ なら，${\rm coker}\,f={\rm id}_B$ である．したがって ${\rm Im}\,f=\ker({\rm id}_B)\cong0$ である．逆に ${\rm Im}\,f\cong0$ なら，$f$ は ${\rm Im}\,f$ を経由するので zero morphism である．
+
+  coimage についても双対的である．$f=0$ なら $\ker f={\rm id}_A$ なので ${\rm Coim}\,f={\rm coker}({\rm id}_A)\cong0$ である．逆に ${\rm Coim}\,f\cong0$ なら，$f$ は ${\rm Coim}\,f$ を経由するので zero morphism である．
+</Proof>
+
+<Proposition>
+  $f:A\to B$ が mono なら，${\rm coim}\,f:A\to{\rm Coim}\,f$ は同型である．双対的に，$f$ が epi なら，${\rm im}\,f:{\rm Im}\,f\to B$ は同型である．
+</Proposition>
+
+<Proof>
+  $f$ が mono なら ${\rm Ker}\,f\cong0$ である．したがって ${\rm coim}\,f$ は zero morphism $0\to A$ の cokernel と同型であり，これは ${\rm id}_A:A\to A$ である．よって ${\rm coim}\,f$ は同型である．
+
+  epi の場合は双対的である．
+</Proof>
+
+<Remark>
+  $A$ を環とする．${\rm Mod}_A$ では，準同型 $f:M\to N$ について
+
+  $$
+  {\rm Ker}\,f=\{m\in M\mid f(m)=0\},\qquad
+  {\rm Coker}\,f=N/f(M)
+  $$
+
+  である．また
+
+  $$
+  {\rm Im}\,f=f(M)\subset N,\qquad
+  {\rm Coim}\,f=M/{\rm Ker}\,f
+  $$
+
+  であり，自然な射
+
+  $$
+  {\rm Coim}\,f=M/{\rm Ker}\,f\longrightarrow{\rm Im}\,f=f(M)
+  $$
+
+  は $m+{\rm Ker}\,f\mapsto f(m)$ で与えられる同型である．これは同型定理そのものである．
+</Remark>
+
+<Definition>
+  additive category $\mathcal{C}$ がすべての kernel と cokernel をもつとは，任意の射 $f:A\to B$ について $\ker f$ と ${\rm coker}\,f$ が存在することをいう．（従って，${\rm im}\,f$，${\rm coim}\,f$ がある．）
+</Definition>
+
+<Remark>
+  すべての kernel と cokernel をもつ additive category を preabelian category ということがある．abelian category は，preabelian category にさらに条件を加えたものである．
+</Remark>
+
+<Definition>
+  additive category $\mathcal{C}$ が abelian category であるとは，次の二条件を満たすことをいう．
+
+  (i) 任意の射が kernel と cokernel をもつ．
+
+  (ii) 任意の射 $f$ について，自然な射
+
+  $$
+  \gamma_f:{\rm Coim}\,f\to{\rm Im}\,f
+  $$
+
+  が同型である．
+</Definition>
+
+<Remark>
+  abelian category の条件 (ii) は，すべての射について「同型定理」が成り立つ，と読むことができる．
+
+  つまり，任意の射 $f:A\to B$ は
+
+  ![abelian categoryにおける f の分解：A から Coim f への射 coim f、Coim f から Im f への同型射、Im f から B への射 im f](/figures/category-theory-7/fig8.svg)
+
+  と分解される．ここで左の射は epi，右の射は mono である．
+</Remark>
+
+<Proposition>
+  abelian category では，任意の mono はある射の kernel であり，任意の epi はある射の cokernel である．より具体的に，mono $m:A\to B$ は ${\rm coker}\,m$ の kernel であり，epi $e:A\to B$ は $\ker e$ の cokernel である．
+</Proposition>
+
+<Proof>
+  $m:A\to B$ を mono とする．上で見たように ${\rm Coim}\,m\cong A$ である．abelian category では ${\rm Coim}\,m\to{\rm Im}\,m$ が同型なので，$A\cong{\rm Im}\,m$ である．また ${\rm im}\,m:{\rm Im}\,m\to B$ は ${\rm coker}\,m$ の kernel である．したがって $m$ は同型を挟んで ${\rm coker}\,m$ の kernel と一致する．つまり $m$ は kernel 射である．
+
+  epi については双対的に示される．
+</Proof>
+
+<Remark>
+  この命題の逆も成り立つ．すなわち，すべての kernel と cokernel をもつ additive category において，すべての mono が kernel 射であり，すべての epi が cokernel 射であることは，abelian category であることと同値である．
+
+  この同値な定義を abelian category の定義として採用することもある．
+</Remark>
+
+<Proposition>
+  abelian category では，射 $f:A\to B$ が mono であることと ${\rm Ker}\,f\cong0$ であることは同値であり，$f$ が epi であることと ${\rm Coker}\,f\cong0$ であることは同値である．
+</Proposition>
+
+<Proof>
+  これは additive category で既に示した命題を，abelian category に適用したものである．abelian category ではすべての kernel と cokernel が存在するので，任意の射についてこの判定を使える．
+</Proof>
+
+<Remark>
+  ${\rm Ab}$ や ${\rm Mod}_A$ は abelian category である．kernel，cokernel，image，coimage は通常の代数で定義されるものと一致する．
+
+  次回以降は，abelian category の中で完全列や完全関手を扱う．
+</Remark>

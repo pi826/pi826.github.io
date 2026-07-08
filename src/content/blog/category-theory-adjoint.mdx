@@ -1,0 +1,270 @@
+---
+title: "圏論補1：随伴"
+date: 2026-06-26T15:12:34.000Z
+tags: ["圏論", "unit", "adjoint"]
+description: "今回は，adjoint functorについてまとめる．"
+draft: false
+---
+
+今回は，adjoint functorについてまとめる．
+
+以下，$\mathcal{C},\mathcal{D}$ を圏とし，必要なら小圏とする．
+
+<Definition>
+  関手 $F:\mathcal{C}\to\mathcal{D}$ と $G:\mathcal{D}\to\mathcal{C}$ があるとする．$F$ が $G$ の left adjoint である，または $G$ が $F$ の right adjoint であるとは，任意の $X\in\mathcal{C}$，$Y\in\mathcal{D}$ について自然な全単射
+
+  $$
+  \Phi_{X,Y}:{\rm Hom}_{\mathcal{D}}(F(X),Y)
+  \cong
+  {\rm Hom}_{\mathcal{C}}(X,G(Y))
+  $$
+
+  があることをいう．
+
+  このとき $F\dashv G$ と書く．
+</Definition>
+
+ここで「自然」とは，$X$ と $Y$ を動かしたとき，この全単射が射の合成と両立するという意味である．つまり，$u:X'\to X,v:Y\to Y'$ と任意の射 $f:F(X)\to Y$ に対して
+
+$$
+\Phi_{X',Y'}(v\circ f\circ F(u))=G(v)\circ \Phi_{X,Y}(f)\circ u
+$$
+
+となるときをいう．（${\rm Hom}_\mathcal{C}(F(-),-)\cong {\rm Hom}_\mathcal{D}(-,G(-)):\mathcal{C}^{\rm op}\times \mathcal{D}\to {\rm Set}$ が自然同型である．）
+
+<Remark>
+  adjoint では左と右の向きが重要である．$F\dashv G$ のとき，$F$ は left adjoint，$G$ は right adjoint である．一般には $G\dashv F$ ではない．
+</Remark>
+
+<Definition>
+  $F\dashv G$ とする．adjunction の unit とは，自然変換
+
+  $$
+  \eta:{\rm id}_{\mathcal{C}}\to G\circ F
+  $$
+
+  であって，各 $X\in\mathcal{C}$ における成分 $\eta_X:X\to G(F(X))$ が，$\eta_X=\Phi_{X,F(X)}({\rm id}_{F(X)})$ となるときをいう．
+
+  adjunction の counit とは，自然変換
+
+  $$
+  \varepsilon:F\circ G\to{\rm id}_{\mathcal{D}}
+  $$
+
+  であって，各 $Y\in\mathcal{D}$ における成分 $\varepsilon_Y:F(G(Y))\to Y$ が，$\varepsilon_Y={\Phi_{G(Y),Y}}^{-1}({\rm id}_{G(Y)})$ となるときをいう．
+</Definition>
+
+unit と counit を使うと，adjunction の全単射はかなり具体的に書ける．射 $f:F(X)\to Y$ に対応する射 $\Phi_{X,Y}(f):X\to G(Y)$ は
+
+$$
+X\xrightarrow{\eta_X}G(F(X))\xrightarrow{G(f)}G(Y)
+$$
+
+であり，射 $g:X\to G(Y)$ に対応する射 ${\Phi_{X,Y}}^{-1}(g):F(X)\to Y$ は
+
+$$
+F(X)\xrightarrow{F(g)}F(G(Y))\xrightarrow{\varepsilon_Y}Y
+$$
+
+である．
+
+<Proposition>
+  $F\dashv G$ とする．このとき unit $\eta$ と counit $\varepsilon$ は次の三角恒等式を満たす．
+
+  $$
+  \varepsilon_{F(X)}\circ F(\eta_X)={\rm id}_{F(X)},\qquad
+  G(\varepsilon_Y)\circ\eta_{G(Y)}={\rm id}_{G(Y)}.
+  $$
+</Proposition>
+
+図式で書くと，これは次の二つの三角形が可換であるということである．
+
+![可換図式：unitとcounitに関する二つの三角恒等式。左はF(X)からF(G(F(X)))への射F(η_X)とF(X)への恒等射、F(G(F(X)))からF(X)への射ε_{F(X)}。右はG(Y)からG(F(G(Y)))への射η_{G(Y)}とG(Y)への恒等射、G(F(G(Y)))からG(Y)への射G(ε_Y)](/figures/category-theory-adjoint/fig1.svg)
+
+<Proof>
+  ${\rm id}_{F(X)}$ に対応する射が $\eta_X$ であるから，$\eta_X$ に逆向きに対応する射は
+
+  $$
+  F(X)\xrightarrow{F(\eta_X)}F(G(F(X)))\xrightarrow{\varepsilon_{F(X)}}F(X)
+  $$
+
+  である．しかし対応は互いに逆な全単射なので，これはもとの ${\rm id}_{F(X)}$ に等しい．
+
+  もう一つも同様である．${\rm id}_{G(Y)}$ に対応する射が $\varepsilon_Y$ であるから，$\varepsilon_Y$ に逆向きに対応する射は
+
+  $$
+  G(Y)\xrightarrow{\eta_{G(Y)}}G(F(G(Y)))\xrightarrow{G(\varepsilon_Y)}G(Y)
+  $$
+
+  であり，これは ${\rm id}_{G(Y)}$ に等しい．
+</Proof>
+
+<Remark>
+  逆に，関手 $F,G$ と自然変換 $\eta:{\rm id}_{\mathcal{C}}\to G\circ F$，$\varepsilon:F\circ G\to{\rm id}_{\mathcal{D}}$ があり，三角恒等式を満たすなら，これらは adjunction $F\dashv G$ を定める．
+
+  実際，$f:F(X)\to Y$ を $G(f)\circ\eta_X:X\to G(Y)$ へ送り，$g:X\to G(Y)$ を $\varepsilon_Y\circ F(g):F(X)\to Y$ へ送れば，三角恒等式により互いに逆な対応になる．
+</Remark>
+
+<Definition>
+  $F\dashv G$ とする．対象 $X\in\mathcal{C}$ について，unit $\eta_X:X\to G(F(X))$ は次の普遍性をもつ．
+
+  任意の $Y\in\mathcal{D}$ と任意の射 $\beta:X\to G(Y)$ に対して，ただ一つの射 $f:F(X)\to Y$ が存在して
+
+  $$
+  \beta=G(f)\circ\eta_X
+  $$
+
+  となる．
+</Definition>
+
+図式では次のようになる．
+
+![可換図式：Xからη_XによるG(F(X))への射と、Xからβによる直接G(Y)への射、G(F(X))からG(f)によるG(Y)への射](/figures/category-theory-adjoint/fig2.svg)
+
+<Proposition>
+  $A$ を可換環とする．自由 $A$ 加群を作る関手
+
+  $$
+  A^{(-)}:{\rm Set}\to{\rm Mod}_A
+  $$
+
+  は，忘却関手 $U:{\rm Mod}_A\to{\rm Set}$ の left adjoint である．すなわち，任意の集合 $S$ と $A$ 加群 $M$ について自然な全単射
+
+  $$
+  {\rm Hom}_A(A^{(S)},M)
+  \cong
+  {\rm Hom}_{\rm Set}(S,U(M))
+  $$
+
+  がある．
+</Proposition>
+
+<Proof>
+  $A^{(S)}$ を，$S$ を基底にもつ自由 $A$ 加群とする．$A$ 線形写像 $\varphi:A^{(S)}\to M$ は，各基底元 $e_s$ の行き先 $\varphi(e_s)\in M$ で一意に決まる．したがって $\varphi$ を与えることは，写像 $S\to U(M)$ を与えることと同じである．
+
+  この対応は $S$ の写像と $A$ 加群準同型 $M\to N$ に関して自然であるから，$A^{(-)}\dashv U$ である．
+</Proof>
+
+この adjunction の unit は，集合 $S$ の元 $s$ を自由加群の基底元 $e_s$ へ送る写像
+
+$$
+S\longrightarrow U(A^{(S)})
+$$
+
+である．counit は，$A$ 加群 $M$ に対して
+
+$$
+A^{(U(M))}\longrightarrow M
+$$
+
+を，$M$ の元を形式的な基底として作った自由加群から，実際の $M$ へ評価する写像である．
+
+<Proposition>
+  $A$ を可換環とし，$N$ を $A$ 加群とする．関手 $-\otimes_A N:{\rm Mod}_A\to{\rm Mod}_A$ は，関手 ${\rm Hom}_A(N,-):{\rm Mod}_A\to{\rm Mod}_A$ の left adjoint である．すなわち，任意の $A$ 加群 $M,P$ について自然な全単射
+
+  $$
+  {\rm Hom}_A(M\otimes_A N,P)
+  \cong
+  {\rm Hom}_A(M,{\rm Hom}_A(N,P))
+  $$
+
+  がある．
+</Proposition>
+
+<Proof>
+  $A$ 線形写像 $\varphi:M\otimes_A N\to P$ を与えることは，$A$ 双線形写像 $M\times N\to P$ を与えることと同じである．一方，$A$ 線形写像 $\psi:M\to{\rm Hom}_A(N,P)$ を与えることも，$m\in M$ と $n\in N$ に対して $\psi(m)(n)\in P$ を対応させる $A$ 双線形写像 $M\times N\to P$ を与えることと同じである．
+
+  したがって，両辺は同じ双線形写像の集合を表しており，自然に全単射である．
+</Proof>
+
+<Proposition>
+  $\mathcal{C}$ が binary product をもつとする．対角関手
+
+  $$
+  \Delta:\mathcal{C}\to\mathcal{C}\times\mathcal{C},\qquad X\mapsto(X,X)
+  $$
+
+  は，product を取る関手
+
+  $$
+  \Pi:\mathcal{C}\times\mathcal{C}\to\mathcal{C},\qquad (A,B)\mapsto A\times B
+  $$
+
+  の left adjoint である．すなわち $\Delta\dashv\Pi$ である．
+</Proposition>
+
+<Proof>
+  任意の $X,A,B\in\mathcal{C}$ について
+
+  $$
+  {\rm Hom}_{\mathcal{C}\times\mathcal{C}}((X,X),(A,B))
+  =
+  {\rm Hom}_{\mathcal{C}}(X,A)\times{\rm Hom}_{\mathcal{C}}(X,B)
+  $$
+
+  である．一方，product の普遍性より
+
+  $$
+  {\rm Hom}_{\mathcal{C}}(X,A\times B)
+  \cong
+  {\rm Hom}_{\mathcal{C}}(X,A)\times{\rm Hom}_{\mathcal{C}}(X,B)
+  $$
+
+  である．よって
+
+  $$
+  {\rm Hom}_{\mathcal{C}\times\mathcal{C}}(\Delta X,(A,B))
+  \cong
+  {\rm Hom}_{\mathcal{C}}(X,\Pi(A,B))
+  $$
+
+  となり，$\Delta\dashv\Pi$ である．
+</Proof>
+
+<Remark>
+  双対的に，$\mathcal{C}$ が binary coproduct をもつなら，coproduct を取る関手 $\amalg:\mathcal{C}\times\mathcal{C}\to\mathcal{C}$ は対角関手 $\Delta$ の left adjoint である．つまり $\amalg\dashv\Delta$ である．
+
+  より一般に，$\mathcal{C}$ が $\mathcal{I}$ 型の colimit をもつなら，${\rm colim}:{\rm Fun}(\mathcal{I},\mathcal{C})\to\mathcal{C}$ は対角関手 $\Delta:\mathcal{C}\to{\rm Fun}(\mathcal{I},\mathcal{C})$ の left adjoint である．また，$\mathcal{C}$ が $\mathcal{I}$ 型の limit をもつなら，$\lim:{\rm Fun}(\mathcal{I},\mathcal{C})\to\mathcal{C}$ は対角関手の right adjoint である．
+</Remark>
+
+<Proposition>
+  $F\dashv G$ であるとする．このとき $F$ は存在する colimit を保つ．
+
+  双対的に，$G$ は存在する limit を保つ．
+</Proposition>
+
+<Proof>
+  $M:\mathcal{I}\to\mathcal{C}$ を図式とし，$L={\rm colim}_{\mathcal{I}}M$ が存在するとする．任意の $Y\in\mathcal{D}$ について，adjunction と colimit の普遍性から
+
+  $$
+  {\rm Hom}_{\mathcal{D}}(F(L),Y)
+  \cong
+  {\rm Hom}_{\mathcal{C}}(L,G(Y))
+  \cong
+  \lim_{i\in\mathcal{I}^{\rm op}}{\rm Hom}_{\mathcal{C}}(M(i),G(Y))
+  $$
+
+  である．さらにもう一度 adjunction を使うと
+
+  $$
+  \lim_{i\in\mathcal{I}^{\rm op}}{\rm Hom}_{\mathcal{C}}(M(i),G(Y))
+  \cong
+  \lim_{i\in\mathcal{I}^{\rm op}}{\rm Hom}_{\mathcal{D}}(F(M(i)),Y)
+  $$
+
+  である．右辺は，$F\circ M$ から $Y$ へのcocone全体の集合である．したがって $F(L)$ は $F\circ M$ の colimit の普遍性を満たす．よって
+
+  $$
+  F({\rm colim}_{\mathcal{I}}M)\cong{\rm colim}_{\mathcal{I}}(F\circ M)
+  $$
+
+  である．
+
+  limit については，矢印を逆にした同じ議論で示される．
+</Proof>
+
+<Remark>
+  この命題は非常に重要である．left adjoint は colimit を保ち，right adjoint は limit を保つ．
+
+  たとえば自由加群関手 $A^{(-)}:{\rm Set}\to{\rm Mod}_A$ は left adjoint なので coproduct や coequalizer を保つ．一方，忘却関手 $U:{\rm Mod}_A\to{\rm Set}$ は right adjoint なので product や equalizer を保つ．
+</Remark>

@@ -1,0 +1,311 @@
+---
+title: "圏論8：完全列"
+date: 2026-06-28T11:53:35.000Z
+tags: ["圏論", "完全列", "exact sequence"]
+description: "今回は，abelian categoryにおけるexact sequenceとsplit exact sequenceについてまとめる．"
+draft: false
+---
+
+今回は，abelian categoryにおけるexact sequenceとsplit exact sequenceについてまとめる．
+
+以下，$\mathcal{C}$をabelian categoryとする．[可換環論2：完全列](https://mathlog.info/articles/4C4KuE6THJOfYYhjxraA)の内容とほとんど同じである．
+
+<Definition>
+  射の列
+
+  ![A から B への射 f、B から C への射 g](/figures/category-theory-8/fig1.svg)
+
+  が $B$ でexactであるとは，$B$ のsubobjectとして
+
+  $$
+  {\rm Im}\,f={\rm Ker}\,g
+  $$
+
+  が成り立つことをいう．
+
+  より明示的には，image morphism ${\rm im}\,f:{\rm Im}\,f\to B$ とkernel morphism $\ker g:{\rm Ker}\,g\to B$ の間に同型 $\varphi:{\rm Im}\,f\to{\rm Ker}\,g$ が存在して
+
+  $$
+  {\rm im}\,f=(\ker g)\circ\varphi
+  $$
+
+  となることをいう．
+</Definition>
+
+図式で書くと，exactness at $B$ は次の形である．
+
+![Im f から Ker g への同型 φ（∼）、Im f から B への射 im f、Ker g から B への射 ker g、B から C への射 g](/figures/category-theory-8/fig2.svg)
+
+<Proposition>
+  射の列
+
+  ![A から B への射 f、B から C への射 g](/figures/category-theory-8/fig1.svg)
+
+  が $B$ でexactなら，$g\circ f=0$ である．
+</Proposition>
+
+<Proof>
+  $f$ はimageを経由するので，ある射 $a:A\to{\rm Im}\,f$ について $f={\rm im}\,f\circ a$ である．またexactnessより ${\rm im}\,f$ は $\ker g$ と同じsubobjectである．したがって $g\circ{\rm im}\,f=0$ であり，
+
+  $$
+  g\circ f=g\circ{\rm im}\,f\circ a=0
+  $$
+
+  である．
+</Proof>
+
+<Definition>
+  列
+
+  ![…, A_{n-1}, A_n, A_{n+1}, … と射 d_{n-1}, d_n からなる図式](/figures/category-theory-8/fig3.svg)
+
+  がexact sequenceであるとは，すべての $n$ について
+
+  $$
+  {\rm Im}\,d_{n-1}={\rm Ker}\,d_n
+  $$
+
+  が成り立つことをいう．
+</Definition>
+
+<Remark>
+  exact sequenceでは，自動的に $d_n\circ d_{n-1}=0$ である．ただし，この条件だけではexactとは限らない．
+</Remark>
+
+<Proposition>
+  列
+
+  ![0 から A への射、A から B への射 i](/figures/category-theory-8/fig4.svg)
+
+  が $A$ でexactであることと，$i$ がmonoであることは同値である．
+
+  双対的に，列
+
+  ![B から C への射 p、C から 0 への射](/figures/category-theory-8/fig5.svg)
+
+  が $C$ でexactであることと，$p$ がepiであることは同値である．
+</Proposition>
+
+<Proof>
+  最初の列について見る．zero morphism $0\to A$ のimageはzero objectである．したがって $A$ でexactであることは ${\rm Ker}\,i\cong0$ であることと同じである．abelian categoryでは，これは $i$ がmonoであることと同値である．
+
+  後半は双対的である．$C\to0$ のkernelは ${\rm id}_C:C\to C$ であるから，$C$ でexactであることは ${\rm Im}\,p\cong C$ であることと同じであり，これは $p$ がepiであることと同値である．
+</Proof>
+
+<Definition>
+  列
+
+  ![0 から A、A から B への射 i、B から C への射 p、C から 0 への射からなる列](/figures/category-theory-8/fig6.svg)
+
+  がshort exact sequenceであるとは，この列が $A$，$B$，$C$ でexactであることをいう．
+</Definition>
+
+<Proposition>
+  abelian categoryにおいて，列
+
+  ![0 から A、A から B への射 i、B から C への射 p、C から 0 への射からなる列](/figures/category-theory-8/fig6.svg)
+
+  がshort exact sequenceであることは，$i$ が $p$ のkernelであり，$p$ が $i$ のcokernelであることと同値である．
+</Proposition>
+
+<Proof>
+  short exact sequenceであるとする．$A$ でexactなので $i$ はmonoであり，$C$ でexactなので $p$ はepiである．また $B$ でexactなので
+
+  $$
+  {\rm Im}\,i={\rm Ker}\,p
+  $$
+
+  である．$i$ はmonoなので，前回の結果より ${\rm im}\,i:{\rm Im}\,i\to B$ は $i:A\to B$ と同型を挟んで一致する．したがって $i$ は $p$ のkernelである．
+
+  さらにabelian categoryでは，任意のepiはそのkernelのcokernelである．$p$ のkernelは $i$ なので，$p$ は $i$ のcokernelである．
+
+  逆に，$i=\ker p$ かつ $p={\rm coker}\,i$ とする．kernel射はmonoであり，cokernel射はepiである．また ${\rm Im}\,i={\rm Ker}\,p$ であるから，列は $A$，$B$，$C$ でexactである．
+</Proof>
+
+<Definition>
+  射 $i:A\to B$ がsplit monoであるとは，射 $r:B\to A$ が存在して
+
+  $$
+  r\circ i={\rm id}_A
+  $$
+
+  となることをいう．このとき $r$ を $i$ のretractionという．
+
+  双対的に，射 $p:B\to C$ がsplit epiであるとは，射 $s:C\to B$ が存在して
+
+  $$
+  p\circ s={\rm id}_C
+  $$
+
+  となることをいう．このとき $s$ を $p$ のsectionという．
+</Definition>
+
+図式で書くと，split monoとsplit epiは次のようになる．
+
+![左：A と B の間の split mono の図式（射 i とretraction r）、右：B と C の間の split epi の図式（射 p とsection s）](/figures/category-theory-8/fig7.svg)
+
+左では $r\circ i={\rm id}_A$，右では $p\circ s={\rm id}_C$ である．
+
+<Proposition>
+  split monoはmonoであり，split epiはepiである．
+</Proposition>
+
+<Proof>
+  $i:A\to B$ がsplit monoで，$r\circ i={\rm id}_A$ を満たす $r:B\to A$ をもつとする．射 $u,v:T\to A$ が $i\circ u=i\circ v$ を満たすなら，$r$ を合成して
+
+  $$
+  u=r\circ i\circ u=r\circ i\circ v=v
+  $$
+
+  である．よって $i$ はmonoである．split epiについては双対的である．
+</Proof>
+
+<Definition>
+  short exact sequence
+
+  ![0 から A、A から B への射 i、B から C への射 p、C から 0 への射からなる列](/figures/category-theory-8/fig6.svg)
+
+  がsplit exact sequenceであるとは，$p$ がsplit epiであることをいう．すなわち，section $s:C\to B$ が存在して $p\circ s={\rm id}_C$ となることをいう．
+</Definition>
+
+<Proposition>
+  short exact sequence
+
+  ![0 から A、A から B への射 i、B から C への射 p、C から 0 への射からなる列](/figures/category-theory-8/fig6.svg)
+
+  について，次は同値である．
+
+  (i) $p$ がsplit epiである．
+
+  (ii) $i$ がsplit monoである．
+
+  (iii) $B\cong A\oplus C$ であり，この同型のもとで $i$ は $A\to A\oplus C$ の標準的な包含，$p$ は $A\oplus C\to C$ の標準的な射影に対応する．
+</Proposition>
+
+<Proof>
+  まず(i)から(ii)を示す．$s:C\to B$ を $p\circ s={\rm id}_C$ を満たすsectionとする．このとき
+
+  $$
+  p\circ({\rm id}_B-s\circ p)=p-p\circ s\circ p=p-p=0
+  $$
+
+  である．$i=\ker p$ なので，kernelの普遍性により，ただ一つの射 $r:B\to A$ が存在して
+
+  $$
+  i\circ r={\rm id}_B-s\circ p
+  $$
+
+  となる．これを $i$ と合成すると
+
+  $$
+  i\circ r\circ i=({\rm id}_B-s\circ p)\circ i=i
+  $$
+
+  である．$i$ はmonoなので $r\circ i={\rm id}_A$ である．よって $i$ はsplit monoである．
+
+  逆に(ii)から(i)を示す．$r:B\to A$ を $r\circ i={\rm id}_A$ を満たすretractionとする．このとき
+
+  $$
+  ({\rm id}_B-i\circ r)\circ i=i-i=0
+  $$
+
+  である．$p={\rm coker}\,i$ なので，cokernelの普遍性により，ただ一つの射 $s:C\to B$ が存在して
+
+  $$
+  s\circ p={\rm id}_B-i\circ r
+  $$
+
+  となる．これに $p$ を左から合成すると
+
+  $$
+  p\circ s\circ p=p\circ({\rm id}_B-i\circ r)=p
+  $$
+
+  である．$p$ はepiなので $p\circ s={\rm id}_C$ である．よって $p$ はsplit epiである．
+
+  したがって(i)または(ii)のどちらかが成り立てば，$r\circ i={\rm id}_A$ を満たす $r:B\to A$ と，$p\circ s={\rm id}_C$ を満たす $s:C\to B$ が両方得られる．この $r$ と $s$ を使って，$A\oplus C$ と $B$ の間の射
+
+  $$
+  \alpha:A\oplus C\to B,\qquad
+  \alpha=i\circ\pi_A+s\circ\pi_C
+  $$
+
+  および
+
+  $$
+  \beta:B\to A\oplus C,\qquad
+  \beta=\iota_A\circ r+\iota_C\circ p
+  $$
+
+  を定める．ここで $\iota_A,\iota_C$ はbiproductへの包含，$\pi_A,\pi_C$ はbiproductからの射影である．
+
+  上の構成から $i\circ r+s\circ p={\rm id}_B$ である．また $r\circ i={\rm id}_A$，$p\circ s={\rm id}_C$，$p\circ i=0$ である．さらに
+
+  $$
+  i\circ r\circ s=({\rm id}_B-s\circ p)\circ s=s-s=0
+  $$
+
+  であり，$i$ はmonoなので $r\circ s=0$ である．このことから
+
+  $$
+  \alpha\circ\beta=i\circ r+s\circ p={\rm id}_B
+  $$
+
+  であり，また
+
+  $$
+  \beta\circ\alpha=
+  \begin{pmatrix}
+  r\circ i & r\circ s\\
+  p\circ i & p\circ s
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+  {\rm id}_A & 0\\
+  0 & {\rm id}_C
+  \end{pmatrix}
+  ={\rm id}_{A\oplus C}
+  $$
+
+  である．したがって $\alpha$ と $\beta$ は互いに逆である．よって $B\cong A\oplus C$ であり，(iii)が成り立つ．
+
+  (iii)なら，$A\oplus C\to C$ の標準的な射影には標準的なsection $C\to A\oplus C$ があるので，$p$ はsplit epiである．したがって(iii)から(i)が従う．
+
+  以上で(i)，(ii)，(iii)は同値である．
+</Proof>
+
+<Remark>
+  上の証明で得た同型 $B\cong A\oplus C$ のもとでは，射 $i,p,r,s$ は行列で
+
+  $$
+  i=
+  \begin{pmatrix}
+  1\\
+  0
+  \end{pmatrix},
+  \qquad
+  p=
+  \begin{pmatrix}
+  0 & 1
+  \end{pmatrix},
+  \qquad
+  r=
+  \begin{pmatrix}
+  1 & 0
+  \end{pmatrix},
+  \qquad
+  s=
+  \begin{pmatrix}
+  0\\
+  1
+  \end{pmatrix}
+  $$
+
+  と表される．
+</Remark>
+
+<Remark>
+  exact sequenceは「imageがkernelと一致する」ことを表し，split exact sequenceはさらに中央の対象がbiproductとして分解することを表す．
+
+  次回以降，exact functorやhomologyを扱うとき，exactnessは基本的な条件になる．
+</Remark>

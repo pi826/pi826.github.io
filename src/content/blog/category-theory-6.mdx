@@ -1,0 +1,458 @@
+---
+title: "圏論6：加法圏"
+date: 2026-06-25T02:33:35.000Z
+tags: ["圏論", "加法圏", "additive category"]
+description: "今回は，additive categoryとadditive functorについてまとめる．"
+draft: false
+---
+
+今回は，additive categoryとadditive functorについてまとめる．
+
+以下，$\mathcal{C}$ を圏とする．
+
+<Definition>
+  $\mathcal{C}$ が preadditive category であるとは，任意の対象 $X,Y\in\mathcal{C}$ に対して ${\rm Hom}_{\mathcal{C}}(X,Y)$ が Abel 群であり，射の合成が双加法的であることをいう．
+
+  すなわち，射 $f_1,f_2:X\to Y$，$g_1,g_2:Y\to Z$ について
+
+  $$
+  (g_1+g_2)\circ f=g_1\circ f+g_2\circ f,\qquad
+  g\circ(f_1+f_2)=g\circ f_1+g\circ f_2
+  $$
+
+  が成り立つ．
+</Definition>
+
+<Remark>
+  preadditive category では，各 ${\rm Hom}_{\mathcal{C}}(X,Y)$ に Abel 群の零元がある．これを $0_{X,Y}:X\to Y$ と書く．
+
+  この段階では，$0_{X,Y}$ は Hom 群の零元として定義される．第5回のように zero object を通って定義した zero morphism とは，まだ別の定義である．ただし，次の命題により，zero object が存在すれば二つの定義は一致する．
+</Remark>
+
+<Proposition>
+  preadditive category に zero object $0$ が存在するとき，Hom 群の零元 $0_{X,Y}:X\to Y$ は，合成 $X\to0\to Y$ で得られる zero morphism に一致する．
+</Proposition>
+
+<Proof>
+  zero object への射 $X\to0$ は一意である．したがって ${\rm Hom}_{\mathcal{C}}(X,0)$ は一元集合であり，Abel 群としては零群である．よって唯一の射 $X\to0$ は Hom 群の零元である．同様に，唯一の射 $0\to Y$ も Hom 群の零元である．
+
+  合成は双加法的なので，零元との合成は零元である．したがって $X\to0\to Y$ は ${\rm Hom}_{\mathcal{C}}(X,Y)$ の零元に一致する．
+</Proof>
+
+<Proposition>
+  preadditive category では，任意の射 $f:X\to Y$ と $g:Y\to Z$ について
+
+  $$
+  f\circ0_{W,X}=0_{W,Y},\qquad
+  0_{Y,Z}\circ f=0_{X,Z},\qquad
+  g\circ(-f)=-(g\circ f)
+  $$
+
+  が成り立つ．
+</Proposition>
+
+<Proof>
+  合成が各変数について群準同型であることから従う．例えば，$f\circ0_{W,X}=f\circ(0+0)=f\circ0+f\circ0$ であるから，両辺から $f\circ0$ を引いて $f\circ0=0$ を得る．他も同様である．
+</Proof>
+
+<Definition>
+  preadditive category $\mathcal{C}$ において，対象 $A,B$ の biproduct とは，対象 $A\oplus B$ と射
+
+  $$
+  i_A:A\to A\oplus B,\quad i_B:B\to A\oplus B,\quad
+  p_A:A\oplus B\to A,\quad p_B:A\oplus B\to B
+  $$
+
+  であって，次を満たすものをいう．
+
+  $$
+  p_A\circ i_A={\rm id}_A,\quad
+  p_B\circ i_B={\rm id}_B,\quad
+  p_A\circ i_B=0,\quad
+  p_B\circ i_A=0
+  $$
+
+  かつ
+
+  $$
+  i_A\circ p_A+i_B\circ p_B={\rm id}_{A\oplus B}
+  $$
+
+  である．
+</Definition>
+
+図式で書くと，biproduct の基本データは次の形である．
+
+![biproductの基本図式：A から A⊕B への射 i_A、A⊕B から A への射 p_A、A⊕B から B への射 p_B、B から A⊕B への射 i_B](/figures/category-theory-6/fig1.svg)
+
+射 $i_A,i_B$ は中へ入れる射，射 $p_A,p_B$ は外へ取り出す射である．
+
+<Proposition>
+  biproduct $A\oplus B$ は，$A$ と $B$ の product であり，かつ coproduct である．
+</Proposition>
+
+<Proof>
+  まず product であることを示す．任意の対象 $T$ と射 $f:T\to A$，$g:T\to B$ が与えられたとする．
+
+  $$
+  u=i_A\circ f+i_B\circ g:T\to A\oplus B
+  $$
+
+  とおくと，biproduct の関係式より
+
+  $$
+  p_A\circ u=f,\qquad p_B\circ u=g
+  $$
+
+  である．
+
+  図式で書けば，次の cone が一意に $A\oplus B$ を経由するということである．
+
+  ![coneの図式：T から A⊕B への破線の射 u、T から A への射 f、T から B への射 g、A⊕B から A への射 p_A、A⊕B から B への射 p_B](/figures/category-theory-6/fig2.svg)
+
+  一意性を示す．$v:T\to A\oplus B$ が $p_A\circ v=f$ かつ $p_B\circ v=g$ を満たすなら，
+
+  $$
+  v={\rm id}_{A\oplus B}\circ v
+  =(i_A\circ p_A+i_B\circ p_B)\circ v
+  =i_A\circ f+i_B\circ g=u
+  $$
+
+  である．よって $A\oplus B$ は product である．
+
+  coproduct であることも同様に示せる．任意の射 $f:A\to T$，$g:B\to T$ に対して
+
+  $$
+  u=f\circ p_A+g\circ p_B:A\oplus B\to T
+  $$
+
+  とおけば，$u\circ i_A=f$ かつ $u\circ i_B=g$ である．また，このような $u$ は一意である．図式では
+
+  ![cococoneの図式：A から A⊕B への射 i_A、A から T への射 f、B から A⊕B への射 i_B、B から T への射 g、A⊕B から T への破線の射 u](/figures/category-theory-6/fig3.svg)
+
+  である．
+</Proof>
+
+<Definition>
+  preadditive category $\mathcal{C}$ が additive category であるとは，$\mathcal{C}$ が zero object をもち，任意の二対象 $A,B$ について biproduct $A\oplus B$ をもつことをいう．
+</Definition>
+
+<Remark>
+  additive category では，有限個の対象の biproduct を帰納的に作れる．したがって finite product と finite coproduct は一致し，どちらも finite direct sum として扱える．
+
+  また，空の biproduct は zero object である．
+</Remark>
+
+<Proposition>
+  preadditive category の対象 $Z$ について，$Z$ が zero object であることと ${\rm id}_Z=0$ であることは同値である．
+</Proposition>
+
+<Proof>
+  $Z$ が zero object なら，${\rm Hom}_{\mathcal{C}}(Z,Z)$ は一元集合である．したがって ${\rm id}_Z=0$ である．
+
+  逆に ${\rm id}_Z=0$ とする．任意の射 $f:X\to Z$ について
+
+  $$
+  f={\rm id}_Z\circ f=0\circ f=0
+  $$
+
+  である．よって $X\to Z$ の射は高々一つであり，zero morphism があるのでちょうど一つ存在する．同様に任意の射 $g:Z\to X$ について $g=g\circ{\rm id}_Z=g\circ0=0$ であるから，$Z\to X$ の射もちょうど一つ存在する．したがって $Z$ は terminal object かつ initial object，すなわち zero object である．
+</Proof>
+
+<Proposition>
+  additive category では，射 $h:A\oplus B\to C\oplus D$ は行列の形で扱える．
+</Proposition>
+
+<Proof>
+  $A\oplus B$ と $C\oplus D$ の biproduct 射をそれぞれ $i_A,i_B,p_A,p_B$ および $i_C,i_D,p_C,p_D$ と書く．射 $h:A\oplus B\to C\oplus D$ に対して
+
+  $$
+  h_{CA}=p_C\circ h\circ i_A,\quad
+  h_{CB}=p_C\circ h\circ i_B,\quad
+  h_{DA}=p_D\circ h\circ i_A,\quad
+  h_{DB}=p_D\circ h\circ i_B
+  $$
+
+  を定める．このとき
+
+  $$
+  h=
+  i_C\circ h_{CA}\circ p_A+
+  i_C\circ h_{CB}\circ p_B+
+  i_D\circ h_{DA}\circ p_A+
+  i_D\circ h_{DB}\circ p_B
+  $$
+
+  である．したがって $h$ は形式的に
+
+  $$
+  \begin{pmatrix}
+  h_{CA} & h_{CB}\\
+  h_{DA} & h_{DB}
+  \end{pmatrix}
+  $$
+
+  と書ける．
+</Proof>
+
+<Proposition>
+  上の行列表示は，射の和と合成に関して通常の matrix の和と matrix product に対応する．
+</Proposition>
+
+<Proof>
+  まず和について見る．$h,k:A\oplus B\to C\oplus D$ を射とする．$h+k$ の $(C,A)$ 成分は
+
+  $$
+  (h+k)_{CA}
+  =p_C\circ(h+k)\circ i_A
+  =p_C\circ h\circ i_A+p_C\circ k\circ i_A
+  =h_{CA}+k_{CA}
+  $$
+
+  である．他の成分も同様である．したがって
+
+  $$
+  h=
+  \begin{pmatrix}
+  h_{CA} & h_{CB}\\
+  h_{DA} & h_{DB}
+  \end{pmatrix},
+  \qquad
+  k=
+  \begin{pmatrix}
+  k_{CA} & k_{CB}\\
+  k_{DA} & k_{DB}
+  \end{pmatrix}
+  $$
+
+  なら
+
+  $$
+  h+k=
+  \begin{pmatrix}
+  h_{CA}+k_{CA} & h_{CB}+k_{CB}\\
+  h_{DA}+k_{DA} & h_{DB}+k_{DB}
+  \end{pmatrix}
+  $$
+
+  である．つまり射の和は成分ごとの和である．
+
+  次に合成について見る．射 $h:A\oplus B\to C\oplus D$ と $\ell:C\oplus D\to E\oplus F$ を
+
+  $$
+  h=
+  \begin{pmatrix}
+  h_{CA} & h_{CB}\\
+  h_{DA} & h_{DB}
+  \end{pmatrix},
+  \qquad
+  \ell=
+  \begin{pmatrix}
+  \ell_{EC} & \ell_{ED}\\
+  \ell_{FC} & \ell_{FD}
+  \end{pmatrix}
+  $$
+
+  と書く．$\ell\circ h:A\oplus B\to E\oplus F$ の $(E,A)$ 成分を計算すると，
+
+  $$
+  (\ell\circ h)_{EA}
+  =p_E\circ \ell\circ h\circ i_A
+  $$
+
+  である．一方，前の命題の表示を $h\circ i_A$ に適用すると
+
+  $$
+  h\circ i_A=i_C\circ h_{CA}+i_D\circ h_{DA}
+  $$
+
+  であるから，合成の双加法性より
+
+  $$
+  (\ell\circ h)_{EA}
+  =p_E\circ \ell\circ i_C\circ h_{CA}
+  +p_E\circ \ell\circ i_D\circ h_{DA}
+  =\ell_{EC}\circ h_{CA}+\ell_{ED}\circ h_{DA}
+  $$
+
+  となる．同様に他の成分も計算すると
+
+  $$
+  \ell\circ h=
+  \begin{pmatrix}
+  \ell_{EC}\circ h_{CA}+\ell_{ED}\circ h_{DA}
+  &
+  \ell_{EC}\circ h_{CB}+\ell_{ED}\circ h_{DB}\\
+  \ell_{FC}\circ h_{CA}+\ell_{FD}\circ h_{DA}
+  &
+  \ell_{FC}\circ h_{CB}+\ell_{FD}\circ h_{DB}
+  \end{pmatrix}
+  $$
+
+  である．これは通常の matrix product と同じ形である．
+</Proof>
+
+<Remark>
+  ${\rm Ab}$ や ${\rm Mod}_A$ は additive category である．Hom 集合の加法は準同型の点ごとの和であり，biproduct は通常の direct sum である．
+
+  例えば $A$ 加群では，$M\oplus N$ から $M$，$N$ への射影と，$M$，$N$ から $M\oplus N$ への包含が biproduct の関係式を満たす．
+</Remark>
+
+<Definition>
+  $\mathcal{C},\mathcal{D}$ を preadditive category とする．関手 $F:\mathcal{C}\to\mathcal{D}$ が additive functor であるとは，任意の $X,Y\in\mathcal{C}$ について写像
+
+  $$
+  {\rm Hom}_{\mathcal{C}}(X,Y)\to
+  {\rm Hom}_{\mathcal{D}}(F(X),F(Y)),\qquad
+  f\mapsto F(f)
+  $$
+
+  が Abel 群の準同型であることをいう．
+
+  つまり，任意の $f,g:X\to Y$ について
+
+  $$
+  F(f+g)=F(f)+F(g)
+  $$
+
+  が成り立つ．
+</Definition>
+
+<Proposition>
+  additive functor は zero morphism と逆元を保つ．すなわち
+
+  $$
+  F(0_{X,Y})=0_{F(X),F(Y)},\qquad
+  F(-f)=-F(f)
+  $$
+
+  である．
+</Proposition>
+
+<Proposition>
+  preadditive category $\mathcal{C}$ に対して，共変 Hom 関手 ${\rm Hom}_{\mathcal{C}}(A,-):\mathcal{C}\to{\rm Ab}$ と反変 Hom 関手 ${\rm Hom}_{\mathcal{C}}(-,A):\mathcal{C}^{\rm op}\to{\rm Ab}$ は additive functor である．
+</Proposition>
+
+<Proof>
+  共変 Hom 関手について見る．射 $f,g:X\to Y$ に対して，$u:A\to X$ を考えると，
+
+  $$
+  (f+g)\circ u=f\circ u+g\circ u
+  $$
+
+  であり，これは合成の双加法性そのものである．よって Hom 集合上の写像は群準同型である．
+
+  反変 Hom 関手についても同様である．
+</Proof>
+
+<Proposition>
+  additive functor の合成は additive functor である．また恒等関手は additive functor である．
+</Proposition>
+
+<Proposition>
+  $F:\mathcal{C}\to\mathcal{D}$ を additive category の間の additive functor とする．このとき $F$ は zero object を zero object へ送る．
+</Proposition>
+
+<Proof>
+  $0$ を $\mathcal{C}$ の zero object とする．上で見たように ${\rm id}_0=0$ である．したがって
+
+  $$
+  {\rm id}_{F(0)}=F({\rm id}_0)=F(0)=0
+  $$
+
+  である．よって ${\rm id}_{F(0)}=0$ であり，先ほどの特徴づけから $F(0)$ は $\mathcal{D}$ の zero object である．
+</Proof>
+
+<Proposition>
+  additive functor は biproduct を保つ．
+</Proposition>
+
+<Proof>
+  $A\oplus B$ を $\mathcal{C}$ における biproduct とする．biproduct の構造射を $i_A,i_B,p_A,p_B$ と書く．関手 $F$ を適用すると
+
+  $$
+  F(i_A):F(A)\to F(A\oplus B),\quad
+  F(i_B):F(B)\to F(A\oplus B)
+  $$
+
+  および
+
+  $$
+  F(p_A):F(A\oplus B)\to F(A),\quad
+  F(p_B):F(A\oplus B)\to F(B)
+  $$
+
+  を得る．
+
+  合成と恒等射は任意の関手が保つので，
+
+  $$
+  F(p_A)\circ F(i_A)={\rm id}_{F(A)},\qquad
+  F(p_B)\circ F(i_B)={\rm id}_{F(B)}
+  $$
+
+  である．また，$F$ は additive なので
+
+  $$
+  F(p_A)\circ F(i_B)=F(p_A\circ i_B)=F(0)=0
+  $$
+
+  であり，同様に $F(p_B)\circ F(i_A)=0$ である．最後に
+
+  $$
+  F(i_A)\circ F(p_A)+F(i_B)\circ F(p_B)
+  =F(i_A\circ p_A)+F(i_B\circ p_B)
+  =F(i_A\circ p_A+i_B\circ p_B)
+  =F({\rm id}_{A\oplus B})
+  ={\rm id}_{F(A\oplus B)}
+  $$
+
+  である．したがって $F(A\oplus B)$ は $F(A)$ と $F(B)$ の biproduct である．
+</Proof>
+
+この命題は，次の図式をそのまま $F$ で送っても biproduct の図式であり続ける，ということである．
+
+![biproductの基本図式：A から A⊕B への射 i_A、A⊕B から A への射 p_A、A⊕B から B への射 p_B、B から A⊕B への射 i_B](/figures/category-theory-6/fig4.svg)
+
+は
+
+![Fで送ったbiproductの図式：F(A) から F(A⊕B) への射 F(i_A)、F(A⊕B) から F(A) への射 F(p_A)、F(A⊕B) から F(B) への射 F(p_B)、F(B) から F(A⊕B) への射 F(i_B)](/figures/category-theory-6/fig5.svg)
+
+に移る．
+
+<Remark>
+  additive functor は biproduct を保つが，kernel や cokernel を保つとは限らない．kernel や cokernel をどの程度保つかを調べるのが，左完全，右完全，完全関手の話につながる．
+</Remark>
+
+<Proposition>
+  $F,G:\mathcal{C}\to\mathcal{D}$ を additive functor とする．自然変換 $\eta,\theta:F\to G$ に対して
+
+  $$
+  (\eta+\theta)_X=\eta_X+\theta_X
+  $$
+
+  と定めると，$\eta+\theta:F\to G$ も自然変換である．
+</Proposition>
+
+<Proof>
+  任意の射 $f:X\to Y$ に対して，自然性は次の図式の可換性で表される．
+
+  ![自然性の図式：F(X) から F(Y) への射 F(f)、F(X) から G(X) への射 η_X、F(Y) から G(Y) への射 η_Y、G(X) から G(Y) への射 G(f)](/figures/category-theory-6/fig6.svg)
+
+  $\theta$ についても同じ図式が可換である．したがって合成の双加法性により
+
+  $$
+  G(f)\circ(\eta_X+\theta_X)
+  =G(f)\circ\eta_X+G(f)\circ\theta_X
+  =\eta_Y\circ F(f)+\theta_Y\circ F(f)
+  =(\eta_Y+\theta_Y)\circ F(f)
+  $$
+
+  である．よって $\eta+\theta$ も自然変換である．
+</Proof>
+
+<Remark>
+  この命題により，additive functor の間の自然変換全体も Abel 群になる．したがって，additive functor を対象，自然変換を射とする関手圏は自然に preadditive category になる．
+
+  さらに値域の圏 $\mathcal{D}$ が additive category なら，biproduct を点ごとに取ることで，additive functor の圏も additive category になる．
+</Remark>

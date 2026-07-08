@@ -1,0 +1,203 @@
+---
+title: "圏論4：極限"
+date: 2026-06-24T12:47:14.000Z
+tags: ["圏論", "極限", "limit"]
+description: "今回は，limitとcolimitについてまとめる．terminal object，product，pullback，equalizerなどはすべてlimitの例であり，initial object，coproduct，pushout，coequalizerなどはcolimitの例である．"
+draft: false
+---
+
+今回は，limitとcolimitについてまとめる．terminal object，product，pullback，equalizerなどはすべてlimitの例であり，initial object，coproduct，pushout，coequalizerなどはcolimitの例である．
+
+以下，$\mathcal{I}$ を小圏とし，$\mathcal{C}$ を圏とする．$\mathcal{I}$ は図式の形を表す圏であり，添字圏ともいう．
+
+<Definition>
+  $\mathcal{C}$ における $\mathcal{I}$ 型の図式とは，関手 $F:\mathcal{I}\to\mathcal{C}$ のことである．
+
+  $i\in\mathcal{I}$ に対して $F(i)$ を図式の対象，射 $\alpha:i\to j$ に対して $F(\alpha):F(i)\to F(j)$ を図式の射と見る．
+</Definition>
+
+例えば，$\mathcal{I}$ が $1\to 0\leftarrow 2$ という形の圏なら，図式 $F:\mathcal{I}\to\mathcal{C}$ は
+
+![図式：F(1) から F(0) への射、F(2) から F(0) への射](/figures/category-theory-4/fig1.svg)
+
+という形をしている．これは pullback を考えるときの基本的な形である．
+
+<Definition>
+  図式 $F:\mathcal{I}\to\mathcal{C}$ への cone とは，対象 $T\in\mathcal{C}$ と射の族 $p_i:T\to F(i)$ であって，任意の射 $\alpha:i\to j$ に対して $F(\alpha)\circ p_i=p_j$ を満たすものをいう．
+
+  このとき $T$ を cone の頂点という．
+</Definition>
+
+cone は次のような可換図式で表される．
+
+![可換図式：cone の頂点 T から F(i)、F(j) への射 p_i、p_j、F(i) から F(j) への射 F(α)](/figures/category-theory-4/fig2.svg)
+
+<Definition>
+  図式 $F:\mathcal{I}\to\mathcal{C}$ の limit とは，cone $(L,(p_i))$ であって，任意の cone $(T,(q_i))$ に対して，ただ一つの射 $u:T\to L$ が存在し，すべての $i\in\mathcal{I}$ について $q_i=p_i\circ u$ を満たすものをいう．
+
+  このとき $L$ を $\lim_{\mathcal{I}}F$ または単に $\lim F$ と書く．
+</Definition>
+
+図式で書くと，limit の普遍性は次のようになる．
+
+![可換図式：limitの普遍性を表す図式。頂点T、cone の頂点L、対象F(i)、F(j)](/figures/category-theory-4/fig3.svg)
+
+<Definition>
+  図式 $F:\mathcal{I}\to\mathcal{C}$ からの cocone とは，対象 $T\in\mathcal{C}$ と射の族 $s_i:F(i)\to T$ であって，任意の射 $\alpha:i\to j$ に対して $s_j\circ F(\alpha)=s_i$ を満たすものをいう．
+</Definition>
+
+<Definition>
+  図式 $F:\mathcal{I}\to\mathcal{C}$ の colimit とは，cocone $(Q,(s_i))$ であって，任意の cocone $(T,(t_i))$ に対して，ただ一つの射 $u:Q\to T$ が存在し，すべての $i\in\mathcal{I}$ について $t_i=u\circ s_i$ を満たすものをいう．
+
+  このとき $Q$ を ${\rm colim}_{\mathcal{I}}F$ または単に ${\rm colim}\,F$ と書く．
+</Definition>
+
+colimit の図式は，limit の図式の矢印をすべて逆向きにしたものと考えればよい．
+
+![可換図式：colimitの普遍性を表す図式。対象F(i)、F(j)、colimitの頂点Q、対象T](/figures/category-theory-4/fig4.svg)
+
+であり，任意の cocone $F(i)\to T$ は一意に $Q$ を経由する．
+
+<Proposition>
+  limit は，存在すれば同型を除いて一意である．colimit も同様である．
+</Proposition>
+
+<Definition>
+  対象 $1\in\mathcal{C}$ が terminal object であるとは，任意の $X\in\mathcal{C}$ に対して射 $X\to 1$ がただ一つ存在することをいう．
+  対象 $0\in\mathcal{C}$ が initial object であるとは，任意の $X\in\mathcal{C}$ に対して射 $0\to X$ がただ一つ存在することをいう．
+</Definition>
+
+<Remark>
+  limit は，cone の圏の terminal object である．colimit は，cocone の圏の initial object である．
+
+  したがって，terminal object・initial object の一意性からも，limit・colimit の一意性が従う．
+</Remark>
+
+<Definition>
+  $I$ を集合とし，$\{A_i\}_{i\in I}$ を $\mathcal{C}$ の対象の族とする．この族の product とは，$I$ を離散圏と見た図式 $i\mapsto A_i$ の limit である．
+
+  つまり，対象 $\prod_{i\in I}A_i$ と射 $p_i:\prod_{i\in I}A_i\to A_i$ の族であって，任意の $T$ と射の族 $f_i:T\to A_i$ に対して，ただ一つの射 $u:T\to\prod_{i\in I}A_i$ が存在し，すべての $i\in I$ について $p_i\circ u=f_i$ を満たすものをいう．
+</Definition>
+
+図式で書くと次のようになる．
+
+![可換図式：productの普遍性を表す図式。対象T、積∏A_k、対象A_i、A_j](/figures/category-theory-4/fig5.svg)
+
+<Definition>
+  $I$ を集合とし，$\{A_i\}_{i\in I}$ を $\mathcal{C}$ の対象の族とする．この族の coproduct とは，$I$ を離散圏と見た図式 $i\mapsto A_i$ の colimit である．
+
+  つまり，対象 $\coprod_{i\in I}A_i$ と射 $\iota_i:A_i\to\coprod_{i\in I}A_i$ の族であって，任意の $T$ と射の族 $f_i:A_i\to T$ に対して，ただ一つの射 $u:\coprod_{i\in I}A_i\to T$ が存在し，すべての $i\in I$ について $u\circ\iota_i=f_i$ を満たすものをいう．
+</Definition>
+
+<Definition>
+  射 $f,g:A\to B$ の equalizer とは，対象 $E$ と射 $e:E\to A$ であって，$f\circ e=g\circ e$ を満たし，さらにこの性質について普遍的なものをいう．すなわち，任意の $T$ と射 $t:T\to A$ で $f\circ t=g\circ t$ を満たすものに対して，ただ一つの射 $u:T\to E$ が存在して $t=e\circ u$ となる．
+</Definition>
+
+![可換図式：equalizerの普遍性を表す図式。対象T、E、A、B](/figures/category-theory-4/fig6.svg)
+
+<Definition>
+  射 $f,g:A\to B$ の coequalizer とは，対象 $Q$ と射 $q:B\to Q$ であって，$q\circ f=q\circ g$ を満たし，さらにこの性質について普遍的なものをいう．すなわち，任意の $T$ と射 $t:B\to T$ で $t\circ f=t\circ g$ を満たすものに対して，ただ一つの射 $u:Q\to T$ が存在して $t=u\circ q$ となる．
+</Definition>
+
+<Definition>
+  射 $f:A\to C,\ g:B\to C$ の pullback とは，図式 $A\xrightarrow{f}C\xleftarrow{g}B$ の limit である．これを $A\times_C B$ と書く．
+</Definition>
+
+図式で書くと，$A\times_C B$ は次の可換四角形を普遍的に満たす対象である．
+
+![可換図式：pullbackの普遍性を表す図式。対象T、A×_C B、A、B、C](/figures/category-theory-4/fig7.svg)
+
+<Definition>
+  射 $f:C\to A,\ g:C\to B$ の pushout とは，図式 $A\xleftarrow{f}C\xrightarrow{g}B$ の colimit である．これを $A\coprod_C B$ と書く．
+</Definition>
+
+図式で書くと，$A\coprod_C B$ は次の可換四角形を普遍的に満たす対象である．
+
+![可換図式：pushoutの普遍性を表す図式。対象C、A、B、A⊔_C B、T](/figures/category-theory-4/fig8.svg)
+
+<Remark>
+  ${\rm Set}$ における limit と colimit は，かなり具体的に書ける．図式 $F:\mathcal{I}\to{\rm Set}$ に対して，limit は Cartesian product の部分集合
+
+  $$
+  \left\{(x_i)_{i\in\mathcal{I}}\in\prod_{i\in\mathcal{I}}F(i)\mid
+  F(\alpha)(x_i)=x_j\ {\rm for\ all}\ \alpha:i\to j\right\}
+  $$
+
+  である．射影 $(x_i)\mapsto x_i$ が cone を与える．つまり集合における limit は，図式のすべての矢印と両立する元の族全体である．
+
+  一方，colimit は disjoint union $\coprod_{i\in\mathcal{I}}F(i)$ を，関係 $\iota_i(x)\sim\iota_j(F(\alpha)(x))$ で生成される同値関係で割った集合である．ここで $\alpha:i\to j$ かつ $x\in F(i)$ であり，$\iota_i:F(i)\to\coprod_iF(i)$ は標準的な包含である．つまり集合における colimit は，図式の矢印で同一視されるべき元を貼り合わせた集合である．
+</Remark>
+
+<Proposition>
+  limit は Hom集合によって特徴づけられる．すなわち，$L=\lim_{\mathcal{I}}F$ であることは，任意の $T\in\mathcal{C}$ について自然な全単射
+
+  $$
+  {\rm Hom}_{\mathcal{C}}(T,L)
+  \cong
+  \lim_{i\in\mathcal{I}}{\rm Hom}_{\mathcal{C}}(T,F(i))
+  $$
+
+  があることと同じである．
+</Proposition>
+
+<Proof>
+  左辺の射 $u:T\to L$ は，各 $i$ について $p_i\circ u:T\to F(i)$ を定める．これは cone の条件を満たす族である．逆に，右辺の元は，$T$ を頂点とする $F$ への cone である．limit の普遍性により，そのような cone は一意な射 $T\to L$ と同じ情報である．
+</Proof>
+
+<Proposition>
+  colimit は Hom集合によって双対的に特徴づけられる．すなわち，$Q={\rm colim}_{\mathcal{I}}F$ であることは，任意の $T\in\mathcal{C}$ について自然な全単射
+
+  $$
+  {\rm Hom}_{\mathcal{C}}(Q,T)
+  \cong
+  \lim_{i\in\mathcal{I}^{\rm op}}{\rm Hom}_{\mathcal{C}}(F(i),T)
+  $$
+
+  があることと同じである．
+</Proposition>
+
+<Proof>
+  射 $u:Q\to T$ は，各 $i$ について $u\circ s_i:F(i)\to T$ を定める．これは cocone の条件を満たす族である．逆に，$F$ から $T$ への cocone は，colimit の普遍性により一意な射 $Q\to T$ と同じ情報である．
+</Proof>
+
+<Definition>
+  圏 $\mathcal{C}$ が small limit をもつとは，任意の小圏 $\mathcal{I}$ と任意の図式 $F:\mathcal{I}\to\mathcal{C}$ に対して $\lim_{\mathcal{I}}F$ が存在することをいう．このとき $\mathcal{C}$ は完備であるという．
+
+  双対的に，$\mathcal{C}$ が small colimit をもつとは，任意の小圏 $\mathcal{I}$ と任意の図式 $F:\mathcal{I}\to\mathcal{C}$ に対して ${\rm colim}_{\mathcal{I}}F$ が存在することをいう．このとき $\mathcal{C}$ は余完備であるという．
+</Definition>
+
+<Proposition>
+  圏 $\mathcal{C}$ が finite product と pullback をもてば，任意の finite limit をもつ．双対的に，finite coproduct と pushout をもてば，任意の finite colimit をもつ．ここで finite product には empty product，すなわち terminal object も含める．同様に finite coproduct には empty coproduct，すなわち initial object も含める．
+</Proposition>
+
+<Proof>
+  まず，finite product と pullback があれば equalizer が作れることを見る．射 $f,g:A\to B$ に対して，product $B\times B$ の対角射 $\Delta:B\to B\times B$ と射 $(f,g):A\to B\times B$ を考える．この二つの射の pullback
+
+  ![可換図式：equalizerの構成に用いるpullback図式。対象E、A、B、B×B](/figures/category-theory-4/fig9.svg)
+
+  を取ると，$e:E\to A$ は $f$ と $g$ の equalizer である．実際，四角形の可換性は $f\circ e=g\circ e$ を意味する．また，$t:T\to A$ が $f\circ t=g\circ t$ を満たすなら，$(f,g)\circ t=\Delta\circ(f\circ t)$ である．したがって pullback の普遍性から，$e\circ u=t$ を満たす射 $u:T\to E$ が一意的に存在する．これは equalizer の普遍性そのものである．
+
+  次に，有限な添字圏 $\mathcal{I}$ と図式 $F:\mathcal{I}\to\mathcal{C}$ を取る．まず図式に現れる対象すべての product
+
+  $$
+  P=\prod_{i\in\mathcal{I}}F(i)
+  $$
+
+  を取り，その射影を $\pi_i:P\to F(i)$ と書く．また，図式に現れる恒等射でない射 $\alpha:i\to j$ すべてに対して終点側の対象 $F(j)$ を並べた product
+
+  $$
+  R=\prod_{\alpha:i\to j,\ \alpha\ne{\rm id}_i}F(j)
+  $$
+
+  を取る．$P$ から $R$ への二つの射 $s,t:P\to R$ を，各 $\alpha:i\to j$ 成分で
+
+  $$
+  s_\alpha=F(\alpha)\circ\pi_i,\qquad t_\alpha=\pi_j
+  $$
+
+  となるように定める．equalizer $e:L\to P$ を取ると，$p_i=\pi_i\circ e$ は cone をなす．
+
+  任意の cone $q_i:T\to F(i)$ が与えられたとする．product の普遍性により，ただ一つの射 $q:T\to P$ が存在して $\pi_i\circ q=q_i$ となる．cone の可換性は，すべての恒等射でない射 $\alpha:i\to j$ について $F(\alpha)\circ q_i=q_j$ であること，すなわち $s\circ q=t\circ q$ であることと同じである．したがって equalizer の普遍性から，ただ一つの射 $u:T\to L$ が存在して $e\circ u=q$ となる．これはすべての $i$ について $p_i\circ u=q_i$ を満たす．よって $L$ は $F$ の limit である．
+
+  finite colimit については，反対圏で同じ議論を適用すればよい．finite coproduct と pushout をもつことは，反対圏が finite product と pullback をもつことと同じである．
+</Proof>

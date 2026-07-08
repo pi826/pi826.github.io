@@ -1,0 +1,205 @@
+---
+title: "圏論3：Yonedaの補題"
+date: 2026-06-24T07:58:47.000Z
+tags: ["圏論", "Yoneda", "fully faithful"]
+description: "今回は，まずYonedaの補題をみる．そのあとで，full, faithful, essential surjective, 圏同値，Yoneda embeddingを定義する．"
+draft: false
+---
+
+今回は，まずYonedaの補題をみる．そのあとで，full, faithful, essential surjective, 圏同値，Yoneda embeddingを定義する．
+
+関手圏 ${\rm Fun}(\mathcal{C},\mathcal{D})$ を考えるときは $\mathcal{C}$ は小圏であるとしておく．
+
+<Definition>
+  $A\in\mathcal{C}$ に対して，反変Hom関手を
+
+  $$
+  h_A={\rm Hom}_{\mathcal{C}}(-,A):\mathcal{C}^{\rm op}\to{\rm Set}
+  $$
+
+  と書く．
+</Definition>
+
+射 $a:A\to B$ があると，任意の $X\in\mathcal{C}$ に対して写像 $h_A(X)\to h_B(X)$ が $f:X\to A$ を $a\circ f:X\to B$ へ送ることで定まる．これらは自然変換 $h_a:h_A\to h_B$ を与える．
+
+<Proposition>
+  $a:A\to B$ により定まる $h_a:h_A\to h_B$ は自然変換である．
+</Proposition>
+
+<Proposition>
+  任意の自然変換 $\eta:h_A\to h_B$ は，$\eta_A({\rm id}_A):A\to B$ を用いて $\eta=h_{\eta_A({\rm id}_A)}$ とかける．
+</Proposition>
+
+<Proposition>
+  任意の $A,B\in\mathcal{C}$ について，自然な全単射
+
+  $$
+  {\rm Hom}_{\mathcal{C}}(A,B)\cong{\rm Nat}(h_A,h_B)
+  $$
+
+  がある．
+</Proposition>
+
+<Proof>
+  射 $a:A\to B$ を自然変換 $h_a:h_A\to h_B$ へ送る写像を考える．前の命題により，任意の自然変換 $\eta:h_A\to h_B$ は $a=\eta_A({\rm id}_A)$ から一意に生じる．したがってこの対応は全単射である．
+</Proof>
+
+${\rm Hom}_{\cal C}(A,B) = h_B(A)$ とみることにより，上の命題は ${\rm Nat}(h_A,h_B)\cong h_B(A)$ を主張することとなるが，一般に，反変関手 $F:{\cal C}^{\rm op} \to {\rm Set}$ に対して，${\rm Nat}(h_A,F)\cong F(A)$ を主張するのが次のYonedaの補題である．
+
+<Proposition title="Yonedaの補題">
+  $F:\mathcal{C}^{\rm op}\to{\rm Set}$ を反変関手とし，$A\in\mathcal{C}$ とする．このとき，自然な全単射
+
+  $$
+  {\rm Nat}(h_A,F)\cong F(A)
+  $$
+
+  がある．対応は，自然変換 $\eta:h_A\to F$ に対して
+
+  $$
+  \eta\mapsto \eta_A({\rm id}_A)
+  $$
+
+  で与えられる．
+</Proposition>
+
+<Proof>
+  写像 $\Phi:{\rm Nat}(h_A,F)\to F(A)$ を $\Phi(\eta)=\eta_A({\rm id}_A)$ で定める．これが全単射であることを示す．
+
+  まず $x\in F(A)$ から自然変換 $\eta^x:h_A\to F$ を作る．各 $X\in\mathcal{C}$ に対して，写像 $\eta^x_X:h_A(X)\to F(X)$ を
+
+  $$
+  \eta^x_X(f)=F(f)(x)\qquad (f:X\to A)
+  $$
+
+  で定める．ここで $F$ は反変関手なので，射 $f:X\to A$ に対して $F(f):F(A)\to F(X)$ である．
+
+  これが自然であることを確認する．射 $u:X'\to X$ と $f:X\to A$ に対して，一方では $f$ を $\eta^x_X$ で $F(f)(x)$ へ送り，そのあと $F(u)$ を作用させると $F(u)(F(f)(x))$ になる．他方，先に $h_A(u)$ で $f\circ u:X'\to A$ へ送り，そのあと $\eta^x_{X'}$ を作用させると $F(f\circ u)(x)$ になる．反変関手の合成法則より $F(u)\circ F(f)=F(f\circ u)$ であるから，両者は一致する．
+
+  次に，$\Phi(\eta^x)=x$ である．実際，$\eta^x_A({\rm id}_A)=F({\rm id}_A)(x)=x$ である．逆に，自然変換 $\eta:h_A\to F$ をとり，$x=\eta_A({\rm id}_A)$ とおく．任意の $f:X\to A$ について，自然性を $f$ に対して使うと $\eta_X(f)=F(f)(\eta_A({\rm id}_A))=F(f)(x)$ である．よって $\eta=\eta^x$ である．したがって $\Phi$ は全単射である．
+</Proof>
+
+<Remark>
+  Yonedaの補題は，「自然変換 $\eta:h_A\to F$ は，$F(A)$ の元を一つ選ぶことと同じである」と読むことができる．しかも，対応する元は $\eta_A({\rm id}_A)$ で決まる．
+</Remark>
+
+<Proposition>
+  表現可能関手の表現対象は，同型を除いて一意である．すなわち，$F:\mathcal{C}^{\rm op}\to{\rm Set}$ について $h_A\cong F$ かつ $h_B\cong F$ ならば，$A\cong B$ である．
+</Proposition>
+
+<Proof>
+  $h_A\cong F\cong h_B$ より $h_A\cong h_B$ である．したがって ${\rm Nat}(h_A,h_B)$ と ${\rm Nat}(h_B,h_A)$ に互いに逆な自然同型がある．上で示した全単射 ${\rm Hom}_{\mathcal{C}}(A,B)\cong{\rm Nat}(h_A,h_B)$ により，これは射 $A\to B$ と $B\to A$ を与える．自然同型の合成が恒等自然変換であることから，対応する射の合成は恒等射である．よって $A\cong B$ である．
+</Proof>
+
+<Definition>
+  $F:\mathcal{C}\to\mathcal{D}$ を関手とする．任意の $A,B\in\mathcal{C}$ に対して，$F$ は写像
+
+  $$
+  {\rm Hom}_{\mathcal{C}}(A,B)\to{\rm Hom}_{\mathcal{D}}(F(A),F(B))\ ;\ f\mapsto F(f)
+  $$
+
+  を定める．
+
+  (i) $F$ がfaithfulであるとは，この写像が任意の $A,B$ について単射であることをいう．
+
+  (ii) $F$ がfullであるとは，この写像が任意の $A,B$ について全射であることをいう．
+
+  (iii) $F$ がfully faithfulであるとは，この写像が任意の $A,B$ について全単射であることをいう．
+</Definition>
+
+<Remark>
+  部分圏 $\mathcal{D}\subset\mathcal{C}$ について，包含関手 $i:\mathcal{D}\to\mathcal{C}$ がfully faithfulであることは，$\mathcal{D}$ が $\mathcal{C}$ のfull-部分圏であることと同じである．
+</Remark>
+
+<Proposition>
+  関手 $F:\mathcal{C}\to\mathcal{D}$ がfully faithfulであるとする．このとき，任意の $A,B\in\mathcal{C}$ について，$A\cong B$ であることと $F(A)\cong F(B)$ であることは同値である．
+</Proposition>
+
+<Proof>
+  $A\cong B$ ならば，関手は同型射を同型射に送るので $F(A)\cong F(B)$ である．逆に，$F(A)\cong F(B)$ とし，$u:F(A)\to F(B)$ を同型射とする．$F$ はfullなので，ある $f:A\to B$ が存在して $F(f)=u$ となる．同様に，$u^{-1}:F(B)\to F(A)$ はある $g:B\to A$ の像である．
+
+  すると $F(g\circ f)=F(g)\circ F(f)=u^{-1}\circ u={\rm id}_{F(A)}=F({\rm id}_A)$ である．$F$ はfaithfulなので $g\circ f={\rm id}_A$ である．同様に $f\circ g={\rm id}_B$ である．したがって $f$ は同型射であり，$A\cong B$ である．
+</Proof>
+
+<Definition>
+  圏 $\mathcal{C}$ と $\mathcal{D}$ が圏同型であるとは，関手 $F:\mathcal{C}\to\mathcal{D}$ と $G:\mathcal{D}\to\mathcal{C}$ が存在して，$G\circ F={\rm id}_{\mathcal{C}}$ かつ $F\circ G={\rm id}_{\mathcal{D}}$ が成り立つことをいう．
+
+  このとき $F$ と $G$ は互いに厳密な逆関手である．
+</Definition>
+
+<Definition>
+  圏 $\mathcal{C}$ と $\mathcal{D}$ が圏同値であるとは，関手 $F:\mathcal{C}\to\mathcal{D}$ と $G:\mathcal{D}\to\mathcal{C}$ が存在して，自然同型
+
+  $$
+  G\circ F\cong{\rm id}_{\mathcal{C}},\qquad F\circ G\cong{\rm id}_{\mathcal{D}}
+  $$
+
+  があることをいう．
+
+  このとき $F$ を圏同値，$G$ をその擬逆関手という．
+</Definition>
+
+<Remark>
+  圏同型では合成が恒等関手に文字通り等しいことを要求する．一方，圏同値では合成が恒等関手と自然同型であればよい．
+
+  圏論では，対象が完全に同じであることよりも，同型を除いて同じ情報を持っていることの方が重要であることが多い．そのため，圏同型より圏同値の方が自然に現れる．
+</Remark>
+
+<Definition>
+  関手 $F:\mathcal{C}\to\mathcal{D}$ がessentially surjectiveであるとは，任意の $Y\in\mathcal{D}$ に対して，ある $X\in\mathcal{C}$ が存在して $F(X)\cong Y$ となることをいう．
+</Definition>
+
+<Proposition>
+  関手 $F:\mathcal{C}\to\mathcal{D}$ が圏同値であることと，$F$ がfully faithfulかつessentially surjectiveであることは同値である．
+</Proposition>
+
+<Proof>
+  $F$ が圏同値であるとする．擬逆関手 $G:\mathcal{D}\to\mathcal{C}$ と自然同型 $F\circ G\cong{\rm id}_{\mathcal{D}}$ があるので，任意の $Y\in\mathcal{D}$ に対して $F(G(Y))\cong Y$ である．よって $F$ はessentially surjectiveである．また，$G\circ F\cong{\rm id}_{\mathcal{C}}$ と $F\circ G\cong{\rm id}_{\mathcal{D}}$ を使うと，任意の $A,B\in\mathcal{C}$ について
+
+  $$
+  {\rm Hom}_{\mathcal{C}}(A,B)\to{\rm Hom}_{\mathcal{D}}(F(A),F(B))
+  $$
+
+  の逆写像を $G$ と自然同型から作れる．したがって $F$ はfully faithfulである．
+
+  逆に，$F$ がfully faithfulかつessentially surjectiveであるとする．各 $Y\in\mathcal{D}$ について，$X=G(Y)\in\mathcal{C}$ と同型 $\varepsilon_Y:F(G(Y))\to Y$ を一つ選ぶ．射 $\psi:Y\to Y'$ に対して，fully faithful性により，ただ一つの射 $G(\psi):G(Y)\to G(Y')$ で
+
+  $$
+  F(G(\psi))=\varepsilon_{Y'}^{-1}\circ\psi\circ\varepsilon_Y
+  $$
+
+  を満たすものが存在する．これにより $G:\mathcal{D}\to\mathcal{C}$ が定まり，$\varepsilon:F\circ G\to{\rm id}_{\mathcal{D}}$ は自然同型になる．さらにfully faithful性から $G\circ F\cong{\rm id}_{\mathcal{C}}$ も従う．よって $F$ は圏同値である．
+</Proof>
+
+<Definition>
+  Yoneda embeddingとは，関手
+
+  $$
+  y:\mathcal{C}\to{\rm Fun}(\mathcal{C}^{\rm op},{\rm Set})
+  $$
+
+  であって，対象 $A$ を $h_A={\rm Hom}_{\mathcal{C}}(-,A)$ へ送り，射 $a:A\to B$ を自然変換 $h_a:h_A\to h_B$ へ送るものをいう．
+</Definition>
+
+<Proposition>
+  Yoneda embedding $y:\mathcal{C}\to{\rm Fun}(\mathcal{C}^{\rm op},{\rm Set})$ はfully faithfulである．
+</Proposition>
+
+<Proof>
+  fully faithfulであることは，任意の $A,B\in\mathcal{C}$ について写像
+
+  $$
+  {\rm Hom}_{\mathcal{C}}(A,B)\to{\rm Nat}(h_A,h_B)
+  $$
+
+  が全単射であることを意味する．これはすでに示した
+
+  $$
+  {\rm Nat}(h_A,h_B)\cong{\rm Hom}_{\mathcal{C}}(A,B)
+  $$
+
+  そのものである．したがって $y$ はfully faithfulである．
+</Proof>
+
+<Remark>
+  Yoneda embeddingがfully faithfulであるということは，$\mathcal{C}$ の対象 $A$ を，その「関手の点」$h_A={\rm Hom}_{\mathcal{C}}(-,A)$ として見ても，射の情報が失われないということである．
+</Remark>

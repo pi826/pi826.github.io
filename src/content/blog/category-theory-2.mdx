@@ -1,0 +1,175 @@
+---
+title: "圏論2：関手と自然変換"
+date: 2026-06-24T06:35:02.000Z
+tags: ["圏論", "関手", "自然変換"]
+description: "今回は，関手，Hom関手，自然変換，表現可能関手についてまとめる．次回Yonedaの補題を述べるために，反対圏と関手圏もあわせて準備しておく．"
+draft: false
+---
+
+今回は，関手，Hom関手，自然変換，表現可能関手についてまとめる．次回Yonedaの補題を述べるために，反対圏と関手圏もあわせて準備しておく．
+
+<Definition>
+  圏 $\mathcal{C},\mathcal{D}$ に対して，$\mathcal{C}$ から $\mathcal{D}$ への関手 $F:\mathcal{C}\to\mathcal{D}$ とは，次のデータからなるものである．
+
+  (i) 各対象 $X\in\mathcal{C}$ に対して，対象 $F(X)\in\mathcal{D}$ を対応させる．
+
+  (ii) 各射 $f:X\to Y$ に対して，射 $F(f):F(X)\to F(Y)$ を対応させる．
+
+  この対応は恒等射と合成を保つ．すなわち，$F({\rm id}_X)={\rm id}_{F(X)}$ であり，合成できる射 $X\xrightarrow{f}Y\xrightarrow{g}Z$ について $F(g\circ f)=F(g)\circ F(f)$ である．
+</Definition>
+
+関手は，対象だけでなく射も保って圏から圏へ移す対応である．図式でかくと，$\mathcal{C}$ の図式
+
+![可換図式：X から Y への射 f、Y から Z への射 g、X から Z への射 g∘f](/figures/category-theory-2/fig1.svg)
+
+は，$\mathcal{D}$ の図式
+
+![可換図式：F(X) から F(Y) への射 F(f)、F(Y) から F(Z) への射 F(g)、F(X) から F(Z) への射 F(g∘f)](/figures/category-theory-2/fig2.svg)
+
+に移り，$F(g\circ f)=F(g)\circ F(f)$ が成り立つ．
+
+<Remark>
+  第1回で出てきた部分圏 $\mathcal{D}\subset\mathcal{C}$ に対しては，包含関手 $i:\mathcal{D}\to\mathcal{C}$ がある．これは対象も射もそのまま大きい圏 $\mathcal{C}$ のものと見る関手である．
+
+  また，$A$ 加群をその台集合へ送る対応 ${\rm Mod}_A\to{\rm Set}$ も関手である．このように，構造を忘れる関手を忘却関手という．
+</Remark>
+
+<Definition>
+  圏 $\mathcal{C}$ の反対圏 $\mathcal{C}^{\rm op}$ とは，対象は $\mathcal{C}$ と同じで，射の向きをすべて逆にした圏である．すなわち
+
+  $$
+  {\rm Hom}_{\mathcal{C}^{\rm op}}(X,Y)
+  =
+  {\rm Hom}_{\mathcal{C}}(Y,X)
+  $$
+
+  と定める．
+</Definition>
+
+関手 $F:\mathcal{C}^{\rm op}\to\mathcal{D}$ を，$\mathcal{C}$ から $\mathcal{D}$ への反変関手という．つまり，$\mathcal{C}$ の射 $f:X\to Y$ に対して，反変関手は逆向きの射 $F(f):F(Y)\to F(X)$ を対応させる．
+
+<Remark>
+  普通の関手 $F:\mathcal{C}\to\mathcal{D}$ を，共変関手ということもある．反変関手は，反対圏からの共変関手として扱うと記法がきれいになる．
+</Remark>
+
+<Definition>
+  $A\in\mathcal{C}$ を固定する．共変Hom関手 ${\rm Hom}_{\mathcal{C}}(A,-):\mathcal{C}\to{\rm Set}$ を次のように定める．
+
+  対象 $X\in\mathcal{C}$ に対して，集合 ${\rm Hom}_{\mathcal{C}}(A,X)$ を対応させる．射 $f:X\to Y$ に対して，写像
+
+  $$
+  {\rm Hom}_{\mathcal{C}}(A,X)\to{\rm Hom}_{\mathcal{C}}(A,Y)\ ;\ u\mapsto f\circ u
+  $$
+
+  を対応させる．
+</Definition>
+
+<Definition>
+  $A\in\mathcal{C}$ を固定する．反変Hom関手 ${\rm Hom}_{\mathcal{C}}(-,A):\mathcal{C}^{\rm op}\to{\rm Set}$ を次のように定める．
+
+  対象 $X\in\mathcal{C}$ に対して，集合 ${\rm Hom}_{\mathcal{C}}(X,A)$ を対応させる．射 $f:X\to Y$ に対して，写像
+
+  $$
+  {\rm Hom}_{\mathcal{C}}(Y,A)\to{\rm Hom}_{\mathcal{C}}(X,A)\ ;\ v\mapsto v\circ f
+  $$
+
+  を対応させる．
+</Definition>
+
+<Proposition>
+  ${\rm Hom}_{\mathcal{C}}(A,-)$ と ${\rm Hom}_{\mathcal{C}}(-,A)$ は関手である．
+</Proposition>
+
+<Proof>
+  まず ${\rm Hom}_{\mathcal{C}}(A,-)$ について示す．恒等射 ${\rm id}_X:X\to X$ に対応する写像は，$u:A\to X$ を ${\rm id}_X\circ u=u$ に送るので恒等写像である．また $X\xrightarrow{f}Y\xrightarrow{g}Z$ に対して，$u:A\to X$ を追うと，まず $f$ で送ってから $g$ で送る操作は $u\mapsto g\circ(f\circ u)$ であり，これは結合法則により $u\mapsto (g\circ f)\circ u$ と等しい．よって合成も保つ．
+
+  ${\rm Hom}_{\mathcal{C}}(-,A)$ についても同様である．射 $X\xrightarrow{f}Y\xrightarrow{g}Z$ に対して，$w:Z\to A$ を追うと，$w\mapsto w\circ g\mapsto (w\circ g)\circ f$ であり，これは $w\mapsto w\circ(g\circ f)$ と等しい．したがって反変Hom関手も関手である．
+</Proof>
+
+<Definition>
+  $F,G:\mathcal{C}\to\mathcal{D}$ を関手とする．$F$ から $G$ への自然変換 $\eta:F\to G$ とは，各対象 $X\in\mathcal{C}$ に対して射 $\eta_X:F(X)\to G(X)$ を与えたもので，任意の射 $f:X\to Y$ に対して
+
+  $$
+  G(f)\circ\eta_X=\eta_Y\circ F(f)
+  $$
+
+  を満たすものをいう．
+
+  関手 $F$ から $G$ への自然変換全体の集合を ${\rm Nat}(F,G)$ とかく．
+</Definition>
+
+自然性の条件は，次の図式が可換であることと同じである．
+
+![可換図式：F(X) から G(X) への射 η_X、F(X) から F(Y) への射 F(f)、G(X) から G(Y) への射 G(f)、F(Y) から G(Y) への射 η_Y](/figures/category-theory-2/fig3.svg)
+
+<Definition>
+  小圏 $\mathcal{C}$，圏 $\mathcal{D}$ に対して，関手圏 ${\rm Fun}(\mathcal{C},\mathcal{D})$ を次のように定める．
+
+  (i) 対象は関手 $F:\mathcal{C}\to\mathcal{D}$ である．
+
+  (ii) 射は自然変換 $\eta:F\to G$ である．すなわち，関手圏における射の集合は
+
+  $$
+  {\rm Hom}_{{\rm Fun}(\mathcal{C},\mathcal{D})}(F,G)
+  =
+  {\rm Nat}(F,G)
+  $$
+
+  である．
+
+  自然変換の合成は，各対象 $X$ での合成 $(\theta\circ\eta)_X=\theta_X\circ\eta_X$ により定める．
+</Definition>
+
+関手圏 ${\rm Fun}(\mathcal{C},\mathcal{D})$ を考えるときは $\mathcal{C}$ は小圏としておく．そうでなければ ${\rm Nat}(F,G)$ が集合とは限らない．
+
+<Proposition>
+  射 $a:A\to B$ は，自然変換 ${\rm Hom}_{\mathcal{C}}(B,-)\to{\rm Hom}_{\mathcal{C}}(A,-)$ を定める．また，自然変換 ${\rm Hom}_{\mathcal{C}}(-,A)\to{\rm Hom}_{\mathcal{C}}(-,B)$ も定める．
+</Proposition>
+
+<Proof>
+  まず各 $X\in\mathcal{C}$ に対して，写像 ${\rm Hom}_{\mathcal{C}}(B,X)\to{\rm Hom}_{\mathcal{C}}(A,X)$ を $u\mapsto u\circ a$ で定める．これは $a$ を前から合成する操作である．射 $f:X\to Y$ に対して，$u:B\to X$ を二通りに送ると，どちらも $f\circ u\circ a$ になるので自然性が成り立つ．
+
+  次に各 $X\in\mathcal{C}$ に対して，写像 ${\rm Hom}_{\mathcal{C}}(X,A)\to{\rm Hom}_{\mathcal{C}}(X,B)$ を $v\mapsto a\circ v$ で定める．これは $a$ を後ろから合成する操作である．射 $f:X\to Y$ に対して自然性を確認すると，どちらの合成も $a\circ v\circ f$ になる．
+</Proof>
+
+<Definition>
+  反変関手 $F:\mathcal{C}^{\rm op}\to{\rm Set}$ が表現可能であるとは，ある対象 $A\in\mathcal{C}$ が存在して，関手の同型
+
+  $$
+  {\rm Hom}_{\mathcal{C}}(-,A)\cong F
+  $$
+
+  があることをいう．このとき，$A$ は $F$ を表現する，または $F$ は $A$ で表現されるという．
+</Definition>
+
+このシリーズでは，$h_A={\rm Hom}_{\mathcal{C}}(-,A)$ と書くことが多い．つまり反変の表現可能関手は，$h_A$ と同型な関手である．
+
+共変関手 $F:\mathcal{C}\to{\rm Set}$ についても，同様にある $A\in\mathcal{C}$ が存在して ${\rm Hom}_{\mathcal{C}}(A,-)\cong F$ となるとき，表現可能であるという．
+
+<Remark>
+  表現可能関手の例をいくつか挙げる．
+
+  (i) 任意の $A\in\mathcal{C}$ について，$h_A={\rm Hom}_{\mathcal{C}}(-,A)$ は定義により表現可能である．
+
+  (ii) ${\rm Set}$ 上の共変関手 $X\mapsto X$ は，一点集合 $\{*\}$ で表現される．実際，${\rm Hom}_{{\rm Set}}(\{*\},X)\cong X$ である．
+
+  (iii) ${\rm Set}$ 上の反変関手 $X\mapsto{\mathcal P}(X)$ は，二点集合 $\{0,1\}$ で表現される．実際，部分集合 $S\subset X$ はその特性関数 $X\to\{0,1\}$ と同じ情報であるから，${\rm Hom}_{{\rm Set}}(X,\{0,1\})\cong{\mathcal P}(X)$ である．
+
+  (iv) $A$ を環とする．忘却関手 ${\rm Mod}_A\to{\rm Set}$ は，$A$ 加群 $A$ で表現される．実際，${\rm Hom}_A(A,M)\cong M$ であり，準同型 $f:A\to M$ は $f(1)$ で決まる．
+</Remark>
+
+<Proposition>
+  反変関手 $F:\mathcal{C}^{\rm op}\to{\rm Set}$ が $A\in\mathcal{C}$ で表現されているとする．すなわち，同型 $\Phi:h_A\to F$ があるとする．このとき，$\xi=\Phi_A({\rm id}_A)\in F(A)$ は次の性質をもつ．
+
+  任意の $X\in\mathcal{C}$ と任意の $x\in F(X)$ に対して，ただ一つの射 $f:X\to A$ が存在して $x=F(f)(\xi)$ となる．
+</Proposition>
+
+<Proof>
+  $\Phi_X:{\rm Hom}_{\mathcal{C}}(X,A)\to F(X)$ は全単射なので，任意の $x\in F(X)$ に対して，ある一意な射 $f:X\to A$ が存在して $\Phi_X(f)=x$ となる．
+
+  一方，自然性より，射 $f:X\to A$ に対して $\Phi_X(f)=\Phi_X({\rm id}_A\circ f) = F(f)(\Phi_A({\rm id}_A))=F(f)(\xi)$ である．したがって $x=F(f)(\xi)$ である．一意性も $\Phi_X$ が単射であることから従う．
+</Proof>
+
+<Remark>
+  次回のYonedaの補題では，$h_A={\rm Hom}_{\mathcal{C}}(-,A)$ から任意の反変関手 $F$ への自然変換全体 ${\rm Nat}(h_A,F)$ が，$F(A)$ の元と一対一に対応することを見る．
+</Remark>

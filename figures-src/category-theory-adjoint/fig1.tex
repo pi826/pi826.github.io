@@ -1,0 +1,14 @@
+\documentclass[border=2pt]{standalone}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\begin{document}
+\begin{tikzcd}
+F(X) \arrow[r, "F(\eta_X)"] \arrow[dr, "{\rm id}_{F(X)}"'] & F(G(F(X))) \arrow[d, "\varepsilon_{F(X)}"] \\
+& F(X)
+\end{tikzcd}
+\qquad
+\begin{tikzcd}
+G(Y) \arrow[r, "\eta_{G(Y)}"] \arrow[dr, "{\rm id}_{G(Y)}"'] & G(F(G(Y))) \arrow[d, "G(\varepsilon_Y)"] \\
+& G(Y)
+\end{tikzcd}
+\end{document}

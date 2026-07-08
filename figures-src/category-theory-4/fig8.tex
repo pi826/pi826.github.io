@@ -1,0 +1,10 @@
+\documentclass[border=2pt]{standalone}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\begin{document}
+\begin{tikzcd}
+C \arrow[r, "f"] \arrow[d, "g"'] & A \arrow[d, "i_A"] \arrow[ddr, "a"] & \\
+B \arrow[r, "i_B"'] \arrow[drr, "b"'] & A\coprod_C B \arrow[dr, "u", dashed] & \\
+& & T
+\end{tikzcd}
+\end{document}
