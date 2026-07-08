@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 # TeX (standalone, TikZ/tikz-cd/pgfplots等) を SVG に変換する。
-# 使い方: ./scripts/tex2svg.sh figures-src/<slug>/fig1.tex
+# 使い方: ./scripts/tex2svg.sh figures-src/<slug>/fig1.tex [scale]
 # 出力先: 入力パスの figures-src/ を public/figures/ に置き換えた場所
+# scale (省略時は1): dvisvgmの--scaleに渡す拡大率。TeXソース自体は変更しない。
 set -euo pipefail
 
-if [ $# -ne 1 ]; then
-  echo "使い方: $0 figures-src/<slug>/<name>.tex" >&2
+if [ $# -lt 1 ] || [ $# -gt 2 ]; then
+  echo "使い方: $0 figures-src/<slug>/<name>.tex [scale]" >&2
   exit 1
 fi
 
 src="$1"
+scale="${2:-1}"
 
 case "$src" in
   figures-src/*) ;;
@@ -75,7 +77,7 @@ if ! compile "$engine"; then
   fi
 fi
 
-if ! dvisvgm --font-format=woff2 -o "$src_dir/$base.svg" "$src_dir/$base.dvi" >> "$log_file" 2>&1; then
+if ! dvisvgm --font-format=woff2 --scale="$scale" -o "$src_dir/$base.svg" "$src_dir/$base.dvi" >> "$log_file" 2>&1; then
   echo "エラー: dvisvgm でのSVG化に失敗しました。ログ:" >&2
   tail -n 30 "$log_file" >&2
   cleanup
