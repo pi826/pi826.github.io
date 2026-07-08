@@ -13,8 +13,14 @@ export default defineConfig({
         rehypeKatex,
         {
           // KaTeX非対応のマクロが必要になった場合はここに追加する
-          // 例: macros: { '\\RR': '\\mathbb{R}' }
-          macros: {},
+          macros: {
+            '\\N': '\\mathbb{N}',
+            '\\Q': '\\mathbb{Q}',
+            '\\R': '\\mathbb{R}',
+            '\\Z': '\\mathbb{Z}',
+            '\\C': '\\mathbb{C}',
+            '\\Spec': '{\\rm Spec}\\,',
+          },
         },
       ],
     ],
