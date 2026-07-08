@@ -1,0 +1,32 @@
+---
+---
+
+<div class="remark">
+  <p class="label">注</p>
+  <div class="body">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .remark {
+    margin: 1.5rem 0;
+    padding: 0.75rem 1.25rem;
+    border-left: 3px solid var(--color-border);
+    color: var(--color-text-muted);
+  }
+
+  .label {
+    margin: 0 0 0.4rem;
+    font-style: italic;
+    font-family: var(--font-sans);
+  }
+
+  .body {
+    margin: 0;
+  }
+
+  .body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

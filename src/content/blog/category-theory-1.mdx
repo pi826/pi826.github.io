@@ -1,0 +1,201 @@
+---
+title: "圏論1：圏"
+date: 2026-06-24
+tags: ["圏論", "圏", "部分圏"]
+description: "今回は，圏，可換図式，mono射，epi射，同型射，部分圏，full-部分圏についてまとめる．"
+draft: false
+---
+
+今回は，圏，可換図式，mono射，epi射，同型射，部分圏，full-部分圏についてまとめる．
+
+<Remark>
+  集合論的な問題を避けるため，以下では十分大きい宇宙 $\mathcal{U}$ を一つ固定しておく．
+
+  ざっくり言えば，このシリーズで「集合」というときは，原則としてこの宇宙の中の集合を考えているものとする．また，対象の集まりが大きくなる場合も，必要ならさらに大きい宇宙へ移ることにして，集合論の細部には立ち入らない．
+
+  この約束は，例えば「すべての集合の圏」や「すべての $A$ 加群の圏」を考えるときに，対象全体が大きすぎるという問題を避けるためのものである．
+</Remark>
+
+<Definition>
+  圏 $\mathcal{C}$ とは，次のデータからなるものである．
+
+  (i) 対象の集まり ${\rm Ob}(\mathcal{C})$．
+
+  (ii) 任意の $A,B\in{\rm Ob}(\mathcal{C})$ に対して，$A$ から $B$ への射の集合 ${\rm Hom}_{\mathcal{C}}(A,B)$．
+
+  (iii) 任意の $A,B,C\in{\rm Ob}(\mathcal{C})$ に対して，射の合成
+
+  $$
+  {\rm Hom}_{\mathcal{C}}(B,C)\times{\rm Hom}_{\mathcal{C}}(A,B)\to{\rm Hom}_{\mathcal{C}}(A,C)
+  $$
+
+  (iv) 任意の $A\in{\rm Ob}(\mathcal{C})$ に対して，恒等射 ${\rm id}_A\in{\rm Hom}_{\mathcal{C}}(A,A)$．
+
+  これらは結合法則と恒等射の条件を満たすものとする．すなわち，合成できる射 $f,g,h$ について $h\circ(g\circ f)=(h\circ g)\circ f$ であり，任意の射 $f:A\to B$ について $f\circ{\rm id}_A=f,\ {\rm id}_B\circ f=f$ である．
+</Definition>
+
+<Definition>
+  圏 $\mathcal{C}$ が小圏であるとは，${\rm Ob}(\mathcal{C})$ が集合であるときをいう．
+</Definition>
+
+<Remark>
+  $X\in{\rm Ob}(\mathcal{C})$ であることを，しばしば単に $X\in\mathcal{C}$ とかく．また $f\in{\rm Hom}_{\mathcal{C}}(A,B)$ であることを $f:A\to B$ または $A\xrightarrow{f}B$ とかく．
+
+  圏を表す文字は，このシリーズでは基本的に $\mathcal{C},\mathcal{D},\mathcal{A}$ のように`\mathcal`を用いる．
+</Remark>
+
+例えば，射 $A\xrightarrow{f}B\xrightarrow{g}C$ があるとき，合成を $g\circ f:A\to C$ とかく．図式で書けば
+
+![可換図式：A から B への射 f、B から C への射 g、A から C への射 g∘f](/figures/category-theory-1/fig1.svg)
+
+である．
+
+<Remark>
+  圏の例をいくつか挙げる．
+
+  (i) 集合を対象とし，写像を射とする圏を ${\rm Set}$ とかく．
+
+  (ii) アーベル群を対象とし，群準同型を射とする圏を ${\rm Ab}$ とかく．
+
+  (iii) 群を対象とし，群準同型を射とする圏を ${\rm Group}$ とかく．
+
+  (iv) $A$ を環とするとき，$A$ 加群を対象とし，$A$ 準同型を射とする圏を ${\rm Mod}_A$ とかく．また $k$ を体とするとき，$k$ ベクトル空間の圏を ${\rm Vect}_k$ とかく．
+
+  (v) $G$ を群とするとき，左 $G$ 作用をもつ集合を対象とし，$G$ 作用と可換な写像を射とする圏を $G\text{-}{\rm Set}$ とかく．
+
+  (vi) 環を対象とし，環準同型を射とする圏を ${\rm Ring}$ とかく．
+
+  (vii) 位相空間を対象とし，連続写像を射とする圏を ${\rm Top}$ とかく．
+
+  (viii) 位相空間 $X$ に対して，$X$ 上の集合の前層の圏を ${\rm PSh}(X)$，集合の層の圏を ${\rm Sh}(X)$，アーベル群の層の圏を ${\rm Ab}(X)$ とかく．
+
+  (ix) 順序集合 $(P,\leq)$ から圏を作ることもできる．対象を $P$ の元とし，$x\leq y$ のときだけ $x$ から $y$ への射がただ一つ存在すると定める．反射律が恒等射に対応し，推移律が射の合成に対応する．
+</Remark>
+
+<Definition>
+  図式が可換であるとは，図式の中で同じ始点から同じ終点へ向かう経路を合成した結果が等しいことをいう．
+</Definition>
+
+例えば，次の三角形が可換であるとは
+
+![可換図式：A から C への射 h、A から B への射 f、B から C への射 g](/figures/category-theory-1/fig2.svg)
+
+等式 $h=g\circ f$ が成り立つことをいう．
+
+また，次の四角形が可換であるとは
+
+![可換図式：A から B への射 f、A から C への射 p、B から D への射 q、C から D への射 g](/figures/category-theory-1/fig3.svg)
+
+等式 $q\circ f=g\circ p$ が成り立つことをいう．
+
+<Remark>
+  圏論では，写像を要素ごとに追う代わりに，可換図式を追う(chase)ことが多い．
+</Remark>
+
+<Definition>
+  射 $f:A\to B$ がモノ射(monomorphism)であるとは，任意の $X\in\mathcal{C}$ と任意の射 $u,v:X\to A$ に対して，$f\circ u=f\circ v$ ならば $u=v$ が成り立つことをいう．
+
+  モノ射を単に mono ともいう．
+</Definition>
+
+図式でかくと，$f$ が mono であるとは
+
+![可換図式：X から A への平行な射 u と v、A から B への射 f](/figures/category-theory-1/fig4.svg)
+
+において，右側で合成して等しくなるならば，もとの $u,v$ が等しいということである．
+
+同じことを ${\rm Hom}$ の言葉で言えば，任意の $X\in\mathcal{C}$ に対して写像
+
+$$
+{\rm Hom}_{\mathcal{C}}(X,A)\to{\rm Hom}_{\mathcal{C}}(X,B)\ ;\ u\mapsto f\circ u
+$$
+
+が単射であるということである．
+
+<Definition>
+  射 $f:A\to B$ がエピ射(epimorphism)であるとは，任意の $Y\in\mathcal{C}$ と任意の射 $u,v:B\to Y$ に対して，$u\circ f=v\circ f$ ならば $u=v$ が成り立つことをいう．
+
+  エピ射を単に epi ともいう．
+</Definition>
+
+図式でかくと，$f$ が epi であるとは
+
+![可換図式：A から B への射 f、B から Y への平行な射 u と v](/figures/category-theory-1/fig5.svg)
+
+において，左側から合成して等しくなるならば，もとの $u,v$ が等しいということである．
+
+同じことを ${\rm Hom}$ の言葉で言えば，任意の $Y\in\mathcal{C}$ に対して写像
+
+$$
+{\rm Hom}_{\mathcal{C}}(B,Y)\to{\rm Hom}_{\mathcal{C}}(A,Y)\ ;\ u\mapsto u\circ f
+$$
+
+が単射であるということである．
+
+<Remark>
+  集合と写像の圏では，mono は通常の単射であり，epi は通常の全射である．ただし，一般の圏では「mono」と「単射」，「epi」と「全射」を完全に同一視してはいけない．mono や epi は，あくまで合成に関する打ち消し可能性として定義されている．
+</Remark>
+
+<Definition>
+  射 $f:A\to B$ が同型射であるとは，ある射 $g:B\to A$ が存在して $g\circ f={\rm id}_A,\ f\circ g={\rm id}_B$ を満たすことをいう．このとき $A$ と $B$ は同型であるといい，$A\cong B$ とかく．また，$g$ は $f^{-1}$ とかく．
+</Definition>
+
+<Definition>
+  圏 $\mathcal{G}$ が groupoid であるとは，$\mathcal{G}$ の任意の射が同型射であることをいう．
+
+  すなわち，任意の射 $f:X\to Y$ に対して，ある射 $g:Y\to X$ が存在して $g\circ f={\rm id}_X,\ f\circ g={\rm id}_Y$ を満たすことである．
+</Definition>
+
+<Proposition>
+  群 $G$ は，一つの対象だけをもつ groupoid とみなせる．
+</Proposition>
+
+<Proof>
+  対象を一つだけもつ圏 $\mathcal{B}G$ を次のように定める．対象を $*$ とし，射の集合を ${\rm Hom}_{\mathcal{B}G}(*,*)=G$ とする．射の合成は群の積で定め，恒等射は単位元 $e\in G$ とする．
+
+  群の積は結合法則を満たし，$e$ は単位元であるから，これは圏である．さらに任意の射 $g\in G$ に対して，群の逆元 $g^{-1}$ が存在し，$g^{-1}g=e,\ gg^{-1}=e$ を満たす．したがって，すべての射は同型射である．よって $\mathcal{B}G$ は groupoid である．
+</Proof>
+
+<Remark>
+  同型射は必ず mono かつ epi である．一方，一般の圏では，mono かつ epi であっても同型射とは限らない．
+
+  したがって，圏論では「単射かつ全射なら同型」と無条件に考えるのではなく，どの圏で考えているかを意識する必要がある．
+</Remark>
+
+<Definition>
+  $\mathcal{C}$ を圏とする．圏 $\mathcal{D}$ が $\mathcal{C}$ の部分圏であるとは，次を満たすことをいう．
+
+  (i) ${\rm Ob}(\mathcal{D})\subset{\rm Ob}(\mathcal{C})$ である．
+
+  (ii) 任意の $A,B\in{\rm Ob}(\mathcal{D})$ に対して ${\rm Hom}_{\mathcal{D}}(A,B)\subset{\rm Hom}_{\mathcal{C}}(A,B)$ である．
+
+  (iii) 恒等射と合成は $\mathcal{C}$ のものと一致している．
+</Definition>
+
+このとき，$\mathcal{D}$ から $\mathcal{C}$ への自然な包含
+
+![可換図式：D から C への射 i](/figures/category-theory-1/fig6.svg)
+
+がある．これは対象も射も，そのまま $\mathcal{C}$ のものとして見る操作である．厳密にはこのような対応を関手というが，関手については次回以降で扱う．
+
+<Definition>
+  $\mathcal{D}$ を $\mathcal{C}$ の部分圏とする．$\mathcal{D}$ が $\mathcal{C}$ の full-部分圏であるとは，任意の $A,B\in{\rm Ob}(\mathcal{D})$ に対して ${\rm Hom}_{\mathcal{D}}(A,B)={\rm Hom}_{\mathcal{C}}(A,B)$ が成り立つことをいう．
+
+  full-部分圏は，充満部分圏ともいう．
+</Definition>
+
+full-部分圏では，対象を選んだら，その対象たちの間に $\mathcal{C}$ で存在していた射はすべて残す．つまり，射を部分的に削ることはしない．
+
+図式的には，$A,B\in\mathcal{D}$ であるとき，$\mathcal{C}$ の中にある射
+
+![可換図式：A から B への射 f](/figures/category-theory-1/fig7.svg)
+
+はすべて $\mathcal{D}$ の射でもある，ということである．
+
+<Remark>
+  例えば，ある圏 $\mathcal{C}$ の対象のうち，特定の性質 $P$ を満たす対象だけを集めることがある．このとき，その対象たちの間の射をすべて残して作った部分圏は full-部分圏である．
+
+  一方，対象は同じでも，射を同型射だけに制限するような作り方をすると，一般には full-部分圏ではない．
+</Remark>
+
+今回の内容は，これ以降の記法の土台である．次回以降は，圏と圏の間の対応である関手，その間の射である自然変換，そして ${\rm Hom}$ 関手を順に見ていく．

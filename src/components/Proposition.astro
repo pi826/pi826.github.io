@@ -1,0 +1,37 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="proposition">
+  <p class="label">命題{title ? `（${title}）` : ''}</p>
+  <div class="body">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .proposition {
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-bg-subtle);
+  }
+
+  .label {
+    margin: 0 0 0.4rem;
+    font-weight: bold;
+    font-family: var(--font-sans);
+  }
+
+  .body {
+    margin: 0;
+  }
+
+  .body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>
