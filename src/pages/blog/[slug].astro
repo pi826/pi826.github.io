@@ -6,6 +6,7 @@ import Definition from '../../components/Definition.astro';
 import Proof from '../../components/Proof.astro';
 import Proposition from '../../components/Proposition.astro';
 import Remark from '../../components/Remark.astro';
+import Example from '../../components/Example.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection(
@@ -28,5 +29,5 @@ const { Content } = await render(post);
   tags={post.data.tags}
   description={post.data.description}
 >
-  <Content components={{ Theorem, Definition, Proof, Proposition, Remark }} />
+  <Content components={{ Theorem, Definition, Proof, Proposition, Remark, Example }} />
 </BlogPostLayout>

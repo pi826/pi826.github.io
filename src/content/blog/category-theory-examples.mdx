@@ -1,0 +1,286 @@
+---
+title: "圏論補2：具体例"
+date: 2026-07-09
+tags: ["圏論", "具体例", "加群", "環"]
+description: "今回は，これまでの圏論のシリーズで導入した概念について，A 加群の圏と環の圏を中心に具体例をまとめる．ホモロジー代数の準備として，今後もこれらの例を頻繁に参照する．"
+draft: false
+---
+
+今回は，これまでの圏論のシリーズで導入した概念について，$A$ 加群の圏と環の圏を中心に具体例をまとめる．ホモロジー代数の準備として，今後もこれらの例を頻繁に参照する．
+
+## 圏の具体例
+
+<Example title="A加群の圏">
+  $A$ を環とする．${\rm Mod}_A$ は，$A$ 加群を対象とし，$A$ 準同型を射とする圏である（第1回）．
+
+  - $A=\mathbb{Z}$ のとき，$\mathbb{Z}$ 加群とは可換群のことなので，${\rm Mod}_{\mathbb{Z}}={\rm Ab}$ である．
+  - $A=k$ が体のとき，$k$ 加群とは $k$ ベクトル空間のことなので，${\rm Mod}_k={\rm Vect}_k$ である．
+  - $A$ を可換環，$I\subset A$ をイデアルとするとき，$I$ で消える（$Im=0$ を満たす）$A$ 加群のなす ${\rm Mod}_A$ のfull-部分圏は，${\rm Mod}_{A/I}$ と圏同値である．
+</Example>
+
+<Example title="環の圏">
+  ${\rm Ring}$ は，単位元をもつ環を対象とし，単位的環準同型（$1$ を $1$ に送る環準同型）を射とする圏である．
+
+  $\mathbb{Z}$ は ${\rm Ring}$ の initial object である．実際，任意の環 $R$ に対して，環準同型 $\mathbb{Z}\to R$ は $1\mapsto1_R$ で一意に定まる．
+</Example>
+
+<Remark>
+  ${\rm Ring}$ には terminal object もある．零環 $0=\{0\}$（$1=0$ となる環）が terminal object である．実際，任意の環 $R$ から零環への環準同型はただ一つである．
+
+  こうして ${\rm Ring}$ には zero object にあたるものがない（initial object と terminal object が異なる）ことがわかる．
+</Remark>
+
+## 部分圏・full-部分圏の具体例
+
+<Example title="部分圏・full-部分圏">
+  $A$ を環とする．
+
+  - 有限生成 $A$ 加群のなす圏は，${\rm Mod}_A$ のfull-部分圏である．対象を制限するだけで，射は制限しないからである．
+  - 自由 $A$ 加群のなす圏も，同様に ${\rm Mod}_A$ のfull-部分圏である．
+  - 一方，$A$ 加群を対象とし，単射準同型だけを射とする部分圏を考えると，これは ${\rm Mod}_A$ の部分圏ではあるがfull-部分圏ではない．対象の間に単射でない射も存在するのに，それを除いているからである．
+</Example>
+
+<Example title="圏同値・groupoid">
+  有限次元 $k$ ベクトル空間のなす圏と，対象を非負整数 $n$，射を $n\times m$ 行列とする圏 ${\rm Mat}_k$ は，圏同値である．実際，$n$ 次元ベクトル空間を $n$ に対応させ，線形写像を基底に関する行列に対応させると，fully faithfulかつessentially surjectiveな関手になる（第3回）．
+
+  また，位相空間 $X$ の基本亜群 $\Pi_1(X)$（対象を $X$ の点，射を道のホモトピー類とする圏）は，すべての射が同型射になるのでgroupoidの例である（第1回の群の場合の一般化にあたる）．
+</Example>
+
+## mono・epi の具体例
+
+<Example title="Mod_Aにおけるmono・epi">
+  $A$ 加群の圏 ${\rm Mod}_A$ では，準同型 $f:M\to N$ について，$f$ がmonoであることと単射であることは同値であり，$f$ がepiであることと全射であることは同値である．
+
+  これは，第5回・第7回で示した「$f$ がmono $\iff{\rm Ker}\,f\cong0$」「$f$ がepi $\iff{\rm Coker}\,f\cong0$」と，${\rm Ker}\,f=\{m\in M\mid f(m)=0\}$，${\rm Coker}\,f=N/f(M)$ が通常の核・余核であることから従う．
+</Example>
+
+<Example title="Ring における epi ≠ 全射">
+  包含写像 $\iota:\mathbb{Z}\hookrightarrow\mathbb{Q}$ は ${\rm Ring}$ の射としてepiであるが，全射ではない．
+
+  実際，環準同型 $\varphi,\psi:\mathbb{Q}\to R$ が $\varphi\circ\iota=\psi\circ\iota$ を満たす，すなわち $\mathbb{Z}$ 上で一致するとする．任意の $0\neq n\in\mathbb{Z}$ について，$\varphi(n)=\psi(n)$ であり，$\varphi(n)\varphi(1/n)=\varphi(1)=1$ なので $\varphi(n)$ は $R$ の中で可逆で，その逆元は $\varphi(1/n)$ である．逆元は一意なので
+
+  $$
+  \varphi(1/n)=\varphi(n)^{-1}=\psi(n)^{-1}=\psi(1/n)
+  $$
+
+  である．よって任意の $m/n\in\mathbb{Q}$ について
+
+  $$
+  \varphi(m/n)=\varphi(m)\varphi(1/n)=\psi(m)\psi(1/n)=\psi(m/n)
+  $$
+
+  となり，$\varphi=\psi$ である．したがって $\iota$ はepiである．
+
+  この例は，第1回で注意したように，monoやepiが合成に関する打ち消し可能性として定義されており，一般の圏では単射・全射と同一視すべきではないことを具体的に示している．
+</Example>
+
+## 関手の具体例
+
+<Example title="忘却関手">
+  ${\rm Mod}_A\to{\rm Set}$，${\rm Ring}\to{\rm Set}$，${\rm Group}\to{\rm Set}$ は，それぞれ台集合を対応させ，準同型を台写像に対応させる忘却関手である．
+</Example>
+
+<Example title="スカラー制限・拡大の随伴">
+  $A,B$ を可換環とし，$\varphi:A\to B$ を環準同型とする．$B$ 加群 $N$ を，$a\cdot n:=\varphi(a)n$（$a\in A$，$n\in N$）によって $A$ 加群とみなす関手
+
+  $$
+  {\rm Res}_\varphi:{\rm Mod}_B\to{\rm Mod}_A
+  $$
+
+  をスカラー制限（restriction of scalars）という．また，$A$ 加群 $M$ に対して $B\otimes_AM$ は自然に $B$ 加群になり，これによって関手
+
+  $$
+  {\rm Ext}_\varphi:{\rm Mod}_A\to{\rm Mod}_B,\qquad M\mapsto B\otimes_AM
+  $$
+
+  （スカラー拡大，extension of scalars）が定まる．このとき自然な全単射
+
+  $$
+  {\rm Hom}_B(B\otimes_AM,N)\cong{\rm Hom}_A(M,{\rm Res}_\varphi N)
+  $$
+
+  があり，${\rm Ext}_\varphi\dashv{\rm Res}_\varphi$ である．これは圏論補1のテンソル・Hom随伴と同様の仕組みによる随伴のもう一つの例である．
+</Example>
+
+<Example title="Hom関手">
+  $A$ を可換環とし，$M$ を $A$ 加群とする．共変Hom関手
+
+  $$
+  {\rm Hom}_A(M,-):{\rm Mod}_A\to{\rm Mod}_A
+  $$
+
+  は，$N\mapsto{\rm Hom}_A(M,N)$（$A$ 準同型全体に $(a\varphi)(m)=a\varphi(m)$ で $A$ 加群の構造を入れたもの）を対応させる関手である．$A$ が可換とは限らない場合，${\rm Hom}_A(M,N)$ は一般には $A$ 加群にならないので，${\rm Ab}$ に値をとる関手として扱う．
+</Example>
+
+<Remark>
+  反変関手の例として，可換環の圏の反対圏は，アフィンスキームの圏と圏同値であることが知られている．この対応を与える反変関手が ${\rm Spec}$ である．この話題はこのシリーズの範囲を超えるため，ここでは名前だけ触れておく．
+</Remark>
+
+## 自然変換の具体例
+
+<Example title="Hom_A(A,-) と恒等関手">
+  $A$ を環とし，$A$ 自身を $A$ 加群と見る．評価写像
+
+  $$
+  \eta_M:{\rm Hom}_A(A,M)\to M,\qquad \eta_M(\varphi)=\varphi(1)
+  $$
+
+  は，$M$ について自然な同型を与える．すなわち ${\rm Hom}_A(A,-)\cong{\rm id}_{{\rm Mod}_A}$ である．
+
+  これは，第2回で見た「忘却関手 ${\rm Mod}_A\to{\rm Set}$ は $A$ で表現される（${\rm Hom}_A(A,M)\cong M$）」という事実を，${\rm Mod}_A$ に値をもつ関手の間の自然同型として精密化したものである．
+</Example>
+
+<Example title="二重双対への自然変換">
+  $k$ を体とし，$V$ を $k$ ベクトル空間とする．評価写像
+
+  $$
+  \iota_V:V\to V^{**},\qquad \iota_V(v)(\xi)=\xi(v)\ (\xi\in V^{*})
+  $$
+
+  は，$V$ について自然変換 $\iota:{\rm id}_{{\rm Vect}_k}\to(-)^{**}$ を与える．
+
+  $V$ が有限次元のときは $\iota_V$ は同型であり，有限次元ベクトル空間のなす圏では $\iota$ は自然同型になる．一方，$V$ が無限次元のときは $\iota_V$ は単射だが同型ではない．このように，自然変換であっても各成分が同型とは限らない．
+</Example>
+
+## 極限・余極限の具体例
+
+<Example title="Mod_Aにおける積と余積">
+  $A$ 加群の族 $\{M_i\}_{i\in I}$ について，productは直積 $\prod_{i\in I}M_i$（成分ごとの演算），coproductは直和 $\bigoplus_{i\in I}M_i$（有限個の成分を除いて $0$ であるような元全体）である．
+
+  $I$ が有限集合なら $\prod_{i\in I}M_i=\bigoplus_{i\in I}M_i$ であり，これは第6回のbiproductである．しかし $I$ が無限集合のときは，一般に両者は一致しない．例えば $A=\mathbb{Z}$，$M_i=\mathbb{Z}$（$i\in\mathbb{N}$）のとき，$\bigoplus_{i\in\mathbb{N}}\mathbb{Z}$ は有限個の成分だけが $0$ でない整数列全体であるが，$\prod_{i\in\mathbb{N}}\mathbb{Z}$ はすべての整数列全体であり，両者は一致しない．
+</Example>
+
+<Example title="Mod_Aにおける引き戻し・押し出し">
+  $A$ 加群の射 $f:M\to L$，$g:N\to L$ について，pullback $M\times_LN$ は
+
+  $$
+  M\times_LN=\{(m,n)\in M\oplus N\mid f(m)=g(n)\}
+  $$
+
+  （$M\oplus N$ の部分加群）であり，構造射は $M\oplus N$ からの射影の制限である．
+
+  双対的に，射 $f:L\to M$，$g:L\to N$ について，pushout $M\coprod_LN$ は
+
+  $$
+  M\coprod_LN=(M\oplus N)/W,\qquad W=\{(f(l),-g(l))\mid l\in L\}
+  $$
+
+  である．
+</Example>
+
+<Example title="Mod_Aにおけるイコライザー">
+  $A$ 加群の射 $f,g:M\to N$ について，equalizerは
+
+  $$
+  {\rm Eq}(f,g)=\{m\in M\mid f(m)=g(m)\}={\rm Ker}(f-g)
+  $$
+
+  である．${\rm Mod}_A$ はpreadditive categoryなので，$f-g$ が意味をもつ（第6回）．
+</Example>
+
+<Remark>
+  可換環の圏 ${\rm Ring}$ のfull-部分圏として，可換環のなす圏 ${\rm CRing}$ を考える．${\rm CRing}$ では，coproductはテンソル積で与えられる．すなわち，可換環 $A,B$ について
+
+  $$
+  A\coprod B=A\otimes_{\mathbb{Z}}B
+  $$
+
+  である．実際，可換環 $C$ への環準同型 $A\otimes_{\mathbb{Z}}B\to C$ を与えることは，環準同型 $A\to C$ と $B\to C$ の組を与えることと同じである．
+</Remark>
+
+## 核・余核・像・余像の具体例
+
+<Example title="単射の場合">
+  $A=\mathbb{Z}$ とし，$f:\mathbb{Z}\to\mathbb{Z}$ を $f(n)=2n$（$2$ 倍写像）とする．このとき
+
+  $$
+  {\rm Ker}\,f=0,\qquad {\rm Im}\,f=2\mathbb{Z},\qquad {\rm Coim}\,f=\mathbb{Z}/0=\mathbb{Z},\qquad {\rm Coker}\,f=\mathbb{Z}/2\mathbb{Z}
+  $$
+
+  であり，同型 $\gamma_f:{\rm Coim}\,f\to{\rm Im}\,f$ は $n\mapsto2n$ で与えられる同型 $\mathbb{Z}\cong2\mathbb{Z}$ である．
+</Example>
+
+<Example title="単射でも全射でもない場合">
+  $f:\mathbb{Z}/4\mathbb{Z}\to\mathbb{Z}/4\mathbb{Z}$ を $f(x)=2x$ とする．このとき
+
+  $$
+  {\rm Ker}\,f=\{0,2\},\qquad {\rm Im}\,f=\{0,2\}
+  $$
+
+  であり，
+
+  $$
+  {\rm Coim}\,f=(\mathbb{Z}/4\mathbb{Z})/\{0,2\}\cong\mathbb{Z}/2\mathbb{Z},\qquad
+  {\rm Coker}\,f=(\mathbb{Z}/4\mathbb{Z})/\{0,2\}\cong\mathbb{Z}/2\mathbb{Z}
+  $$
+
+  である．同型定理により，同型 $\gamma_f:{\rm Coim}\,f\to{\rm Im}\,f$ は $x+\{0,2\}\mapsto2x$ で与えられる．この例では，たまたま ${\rm Ker}\,f={\rm Im}\,f=\{0,2\}$ となっているため，${\rm Coim}\,f$ と ${\rm Coker}\,f$ が同じ商 $(\mathbb{Z}/4\mathbb{Z})/\{0,2\}$ として計算され，結果的に同型になっている．${\rm Coim}\,f$ は $A$ 側，${\rm Coker}\,f$ は $B$ 側の商であり，一般にはこのような一致は起こらない．
+</Example>
+
+## 加法圏・アーベル圏の具体例
+
+<Example title="加法圏になる例・ならない例">
+  ${\rm Ab}$，${\rm Mod}_A$，${\rm Vect}_k$ はいずれも加法圏（さらにアーベル圏）である．
+
+  一方，次の圏は加法圏ではない．
+
+  - ${\rm Set}$：zero objectが存在しない（第5回）．また ${\rm Hom}_{\rm Set}(X,Y)$ に自然な可換群の構造もない．
+  - ${\rm Group}$：群準同型 $f,g:G\to H$ に対して各点ごとの積 $(fg)(x)=f(x)g(x)$ を考えると
+
+    $$
+    (fg)(xy)=f(x)f(y)g(x)g(y),\qquad
+    (fg)(x)(fg)(y)=f(x)g(x)f(y)g(y)
+    $$
+
+    であり，両者が一致するには $f(y)g(x)=g(x)f(y)$ が必要である．とくに $G=H$，$f=g={\rm id}_G$ の場合，この条件は「$G$ が可換群であること」に一致する．したがって $G$ が非可換群なら，${\rm id}_G$ 同士の各点ごとの積は準同型にならず，${\rm Hom}_{\rm Group}(G,G)$ に各点ごとの積で自然に群構造を入れることはできない．
+  - ${\rm Ring}$：環準同型 $f,g:A\to R$（$R\neq0$）に対して各点ごとの和 $(f+g)(x)=f(x)+g(x)$ を考える．環準同型は単位元を単位元に送るので，$f+g$ が環準同型なら $(f+g)(1_A)=1_R$ となるはずだが，
+
+    $$
+    (f+g)(1_A)=f(1_A)+g(1_A)=1_R+1_R=2\cdot1_R
+    $$
+
+    であり，$R\neq0$ ならこれは $1_R$ と一致しない．したがって $f+g$ は環準同型にならず，${\rm Hom}_{\rm Ring}(A,R)$ に各点ごとの和で自然に加法群構造を入れることはできない．
+</Example>
+
+<Remark>
+  ${\rm Vect}_k$ は，もっとも単純なアーベル圏である．一方，${\rm Group}$，${\rm Ring}$ は上で見たように加法圏でさえないので，アーベル圏でもない．
+</Remark>
+
+## 完全列の具体例
+
+<Example title="基本的なshort exact sequence">
+  $n\geq2$ を整数とする．$\mathbb{Z}$ 加群の列
+
+  $$
+  0\longrightarrow\mathbb{Z}\xrightarrow{\times n}\mathbb{Z}\longrightarrow\mathbb{Z}/n\mathbb{Z}\longrightarrow0
+  $$
+
+  （$\times n$ は $n$ 倍写像，最後の射は自然な商写像）はshort exact sequenceである．実際，$\times n$ は単射なので $\mathbb{Z}$ でexactであり，商写像は全射なので $\mathbb{Z}/n\mathbb{Z}$ でexactであり，中間で ${\rm Im}(\times n)=n\mathbb{Z}={\rm Ker}(\mathbb{Z}\to\mathbb{Z}/n\mathbb{Z})$ である．
+</Example>
+
+<Example title="splitする例・しない例">
+  $\mathbb{Z}$ 加群の列
+
+  $$
+  0\longrightarrow\mathbb{Z}\xrightarrow{i}\mathbb{Z}\oplus\mathbb{Z}\xrightarrow{p}\mathbb{Z}\longrightarrow0,\qquad
+  i(a)=(a,0),\ p(a,b)=b
+  $$
+
+  は，$s(b)=(0,b)$ が $p\circ s={\rm id}$ を満たすsectionを与えるので，split exact sequenceである．
+
+  一方，上で見た
+
+  $$
+  0\longrightarrow\mathbb{Z}\xrightarrow{\times2}\mathbb{Z}\longrightarrow\mathbb{Z}/2\mathbb{Z}\longrightarrow0
+  $$
+
+  はsplitしない．実際，もしsplitすれば，第8回の命題により $\mathbb{Z}\cong\mathbb{Z}\oplus(\mathbb{Z}/2\mathbb{Z})$ となる．しかし $\mathbb{Z}$ はtorsion-free（$0$ でない元の有限位数倍が $0$ になることがない）だが，$\mathbb{Z}\oplus(\mathbb{Z}/2\mathbb{Z})$ の元 $(0,1)$ は位数 $2$ のtorsion元である．これは矛盾なので，このshort exact sequenceはsplitしない．
+</Example>
+
+<Remark>
+  体上のベクトル空間の圏 ${\rm Vect}_k$ では，すべてのshort exact sequenceがsplitする．これは，部分空間には必ず（線形代数的な）補空間が存在することによる．したがって ${\rm Vect}_k$ では，短完全列に関する情報は次元の等式 $\dim B=\dim A+\dim C$ に還元されてしまい，あまり面白くない．
+
+  一般の $A$ 加群では補空間が存在するとは限らないため，短完全列は非自明な情報をもつ．ホモロジー代数で扱う ${\rm Ext}$ 関手などは，まさにこの「splitしない度合い」を測るものである．
+</Remark>
+
+今回はここまでとする．次回以降は，これらの具体例を念頭に置きながら，exact functorやhomologyの話に進む予定である．
