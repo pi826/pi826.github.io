@@ -1,0 +1,175 @@
+---
+title: "古典的代数幾何-Fultonを読んで-3：Zariskiの補題の証明と座標環"
+date: 2026-07-11T09:00:00.000Z
+tags: ["代数幾何", "Fulton", "Zariskiの補題", "座標環"]
+description: "Fultonを読むシリーズ第3回．前回予告した加群論と整拡大の道具を使ってZariskiの補題を証明し，Nullstellensatzの証明を完成させる．そのあと座標環と多項式写像についてまとめる．"
+draft: false
+---
+
+前回予告した通り，今回はまず加群と整拡大の基本事項を準備し，Zariskiの補題を証明してNullstellensatzの証明を完成させる．そのあと，座標環と多項式写像についてまとめる．今回も独自のまとめであり，Fultonの文章の翻訳ではなく，演習問題も掲載しない．
+
+以下，$k$ は代数的閉体とする．
+
+## 加群とNoether加群
+
+<Definition>
+  $R$ 加群 $M$ が Noether加群であるとは，$M$ の部分加群の上昇列がつねに停止することをいう（部分加群に関する ACC）．これは，$M$ のすべての部分加群が有限生成であることと同値である（第1回でイデアルについて示した議論がそのまま部分加群に対しても成り立つ）．
+</Definition>
+
+<Proposition>
+  $R$ が Noetherian であり，$M$ が有限生成 $R$ 加群であるとする．このとき $M$ は Noether加群である．
+</Proposition>
+
+<Proof>
+  $M$ の生成元を $m_1,\dots,m_n$ とすると，$e_i\mapsto m_i$ で全射 $R$ 加群準同型 $\varphi:R^n\to M$ が定まる．$R^n$ がNoether加群であることを $n$ に関する帰納法で示せば十分である．なぜなら，$N\subset M$ を部分加群とすると，$\varphi^{-1}(N)\subset R^n$ は部分加群であり，$R^n$ がNoether加群なら $\varphi^{-1}(N)$ は有限生成，したがってその像 $N=\varphi(\varphi^{-1}(N))$（$\varphi$ が全射なので）も有限生成になるからである．
+
+  $n=1$ のとき，$R$ の部分加群はイデアルであり，$R$ がNoetherianなので有限生成である．$n-1$ でNoether加群であると仮定し，$N\subset R^n$ を部分加群とする．最後の成分への射影 $\pi:R^n\to R$ を考えると，$\pi(N)$ はイデアルなので有限生成であり，生成元 $g_1,\dots,g_s$ の逆像 $n_1,\dots,n_s\in N$（$\pi(n_i)=g_i$）を一つずつとる．また $N':=N\cap R^{n-1}$（最後の成分が $0$ の元）は，帰納法の仮定より有限生成であり，生成元を $n'_1,\dots,n'_t$ とする．任意の $x\in N$ について，$\pi(x)=\sum_ir_ig_i$ と書けるので，$x-\sum_ir_in_i$ は最後の成分が $0$，つまり $N'$ の元であり，$x-\sum_ir_in_i=\sum_js_jn'_j$ と書ける．したがって $x=\sum_ir_in_i+\sum_js_jn'_j$ であり，$N$ は $\{n_i\}\cup\{n'_j\}$ で生成される．よって $N$ は有限生成であり，$R^n$ はNoether加群である．
+</Proof>
+
+## 整拡大とArtin–Tateの補題
+
+<Definition>
+  環の拡大 $R\subset S$ において，$s\in S$ が $R$ 上整であるとは，モニック多項式の関係式
+
+  $$
+  s^m+r_{m-1}s^{m-1}+\cdots+r_0=0\qquad(r_i\in R)
+  $$
+
+  を満たすことをいう．また，$S$ が $R$ 上有限であるとは，$S$ が $R$ 加群として有限生成であることをいう．
+</Definition>
+
+<Proposition>
+  $R\subset S$ とする．$S$ が $R$ 上有限ならば，$S$ のすべての元は $R$ 上整である．
+</Proposition>
+
+<Proof>
+  $s\in S$ とする．$S$ の $R$ 加群としての生成元を $m_1,\dots,m_n$（$1$ を含むとしてよい）とすると，$s\cdot m_i=\sum_ja_{ij}m_j$（$a_{ij}\in R$）と書ける．$A=(a_{ij})$ とおくと，$(sI-A)$ を $(m_1,\dots,m_n)^T$ に作用させると $0$ になる．余因子行列を左から掛けると，Cramerの公式と同様の議論（余因子行列と行列の積が行列式の定数倍の単位行列になること）から，$\det(sI-A)\cdot m_j=0$（すべての $j$）を得る．$m_i$ たちは $1$ を含む生成系なので，$\det(sI-A)\cdot1=0$，すなわち $\det(sI-A)=0$ である．これは $s$ に関するモニック多項式（次数 $n$，係数は $A$ の成分から作られるので $R$ に属する）なので，$s$ は $R$ 上整である．
+</Proof>
+
+<Proposition title="Artin–Tateの補題">
+  $A\subset B\subset C$ を環の拡大とする．$A$ はNoetherianであり，$C$ は $A$ 代数として有限生成であり，$C$ は $B$ 上有限であるとする．このとき $B$ は $A$ 代数として有限生成である．
+</Proposition>
+
+<Proof>
+  $C=A[x_1,\dots,x_n]$ とし，$C$ の $B$ 加群としての生成元を $y_1,\dots,y_m$（$1$ を含むとしてよい）とする．各 $x_i=\sum_jb_{ij}y_j$，各積 $y_iy_j=\sum_lb_{ijl}y_l$ となる $b_{ij},b_{ijl}\in B$ が取れる．これら有限個の $b_{ij},b_{ijl}$ が生成する $A$ 部分代数を $B_0\subset B$ とする．
+
+  $A$ がNoetherianなので，Hilbertの基底定理（第1回）より $B_0$（$A$ 上有限生成な代数，つまり多項式環の商）はNoetherianである．
+
+  $M=\sum_jB_0y_j\subset C$ とおく．$y_iy_j\in M$（$b_{ijl}\in B_0$ より）なので $M$ は積で閉じており，$1\in M$（$1$ を $y_i$ の一つとしたので），$x_i\in M$（$b_{ij}\in B_0\subset M\cdot1$ より）である．よって $M$ は $A$ と $x_1,\dots,x_n$ を含む部分環であり，$C=A[x_1,\dots,x_n]$ はこれを含む最小の部分環だから $C\subset M$，したがって $C=M$ である．すなわち $C$ は $y_1,\dots,y_m$ で生成される有限 $B_0$ 加群である．
+
+  $B_0$ はNoetherianなので，前の命題により $C$（有限 $B_0$ 加群）はNoether $B_0$ 加群である．$B\subset C$ は $B_0$ 部分加群なので，有限生成である．したがって $B$ は，有限生成 $A$ 代数 $B_0$ の上の有限 $B_0$ 加群であり，$B_0$ の代数生成元と $B$ の $B_0$ 加群生成元を合わせれば，$B$ は $A$ 代数として有限生成であることがわかる．
+</Proof>
+
+<Proposition>
+  $r\geq1$ のとき，有理関数体 $k(t_1,\dots,t_r)$ は $k$ 代数として有限生成ではない．
+</Proposition>
+
+<Proof>
+  $k(t_1,\dots,t_r)=k[b_1,\dots,b_p]$（$b_i\in k(t_1,\dots,t_r)$）と仮定する．各 $b_i=f_i/g_i$（$f_i,g_i\in k[t_1,\dots,t_r]$，$g_i\neq0$）とし，$g=\prod_ig_i$ とおく．
+
+  $g$ を $t_1$ に関する多項式とみて，係数を $k[t_2,\dots,t_r]$ にとる．$g\neq0$ なので，$g$ が恒等的に $0$ にならない $c\in k$ に関して $t_1-c$ が $g$ を割り切ることはない場合を除いて有限個の例外しかない（$g$ を $t_1$ の多項式とみたときの根の個数は，$g$ が $t_1$ に依存するなら次数以下であり，依存しないならそもそも $t_1-c$ で割れない）．$k$ は無限体なので，$q=t_1-c$ が $g$ を割り切らないような $c\in k$ が取れる．$q$ は既約多項式である．
+
+  $1/q\in k(t_1,\dots,t_r)$ を $b_1,\dots,b_p$ の $k$ 係数多項式として書けたとすると，分母を払うことで，ある $M\geq0$ について $g^M/q\in k[t_1,\dots,t_r]$，すなわち $q\mid g^M$ となる．しかし $q$ は既約で $g$ を割り切らないので，一意分解性より $q\nmid g^M$ である．これは矛盾なので，$1/q$ はそのように書けない．これは $k[b_1,\dots,b_p]=k(t_1,\dots,t_r)$ に反する．
+</Proof>
+
+## Zariskiの補題の証明
+
+<Theorem title="Zariskiの補題">
+  $K$ が体であり，$k$ 代数として有限生成であるとする．このとき $K$ は $k$ の有限次拡大である．
+</Theorem>
+
+<Proof>
+  $K=k[a_1,\dots,a_n]$ とする．$a_1,\dots,a_n$ の中から，$k$ 上代数的独立な部分を極大となるように選び，番号を付け替えて $a_1,\dots,a_r$ とする（$r=0$ でもよい）．$F=k(a_1,\dots,a_r)$ とおく．極大性より，$j>r$ の各 $a_j$ について，$a_1,\dots,a_r,a_j$ は代数的独立ではない．$a_1,\dots,a_r$ 自身は独立なので，この従属関係は $a_j$ を本質的に含み，$a_j$ は $F$ 上代数的である．
+
+  したがって $K=F(a_{r+1},\dots,a_n)$ は $F$ 上有限個の代数的な元で生成される拡大であり，$F$ 上有限次元のベクトル空間，すなわち $F$ 上有限である．
+
+  $A=k$，$B=F$，$C=K$ としてArtin–Tateの補題を適用する．$A=k$ はNoetherianであり（体なのでイデアルは $(0)$ と $k$ のみ），$C=K$ は $A=k$ 代数として有限生成であり（$a_1,\dots,a_n$ で生成），$C=K$ は $B=F$ 上有限である（上で見た）．よって $B=F=k(a_1,\dots,a_r)$ は $k$ 代数として有限生成である．
+
+  もし $r\geq1$ なら，$a_1,\dots,a_r$ が代数的独立であることから $F\cong k(t_1,\dots,t_r)$（有理関数体）であり，これが $k$ 代数として有限生成であることは前の命題に反する．したがって $r=0$ であり，$F=k$ である．このとき $K$ は $F=k$ 上有限，すなわち $k$ の有限次拡大である．
+</Proof>
+
+<Remark>
+  これで，前回述べたHilbertの零点定理（弱形）の証明で使ったZariskiの補題が証明された．こうして，第2回で示した弱形・強形のNullstellensatzの証明が完成したことになる．
+</Remark>
+
+## 座標環
+
+<Definition>
+  代数的集合 $X\subset\mathbb{A}^n$ に対して，$X$ の座標環とは
+
+  $$
+  \Gamma(X)=k[x_1,\dots,x_n]/I(X)
+  $$
+
+  のことである．$\Gamma(X)$ の元を，$X$ 上の多項式関数という．
+</Definition>
+
+<Remark>
+  $I(X)$ は根基イデアル（第1回）なので，$\Gamma(X)$ は被約環（$0$ でない冪零元をもたない）である．また $\Gamma(X)$ は $k$ 代数として有限生成である．
+
+  逆に，任意の有限生成被約 $k$ 代数 $R$ は，ある代数的集合の座標環として実現できる．実際，$R=k[x_1,\dots,x_n]/J$（$J$ は根基イデアル）と表すと，強形のNullstellensatzより $J=I(V(J))$ なので，$R=\Gamma(V(J))$ である．
+</Remark>
+
+<Proposition>
+  $X$ が既約であることと，$\Gamma(X)$ が整域であることは同値である．
+</Proposition>
+
+<Proof>
+  これは，$X$ が既約であることと $I(X)$ が素イデアルであることの同値性（今回の最初の命題）と，$R/I$ が整域であることと $I$ が素イデアルであることの同値性（一般の可換環論の事実）を合わせたものである．
+</Proof>
+
+<Definition>
+  既約な代数的集合をアフィン多様体という．
+</Definition>
+
+<Remark>
+  強形のNullstellensatzにより，$\Gamma(X)$ の極大イデアルは，$X$ の点とちょうど対応する．実際，弱形のNullstellensatzの証明と同じ議論により，$\Gamma(X)$ の任意の極大イデアル $\mathfrak{m}$ について $\Gamma(X)/\mathfrak{m}\cong k$ であり，$\mathfrak{m}$ は $k[x_1,\dots,x_n]$ のある極大イデアル $M\supset I(X)$ の像であり，$M=I(\{P\})$ となる点 $P\in X$ に対応する．
+</Remark>
+
+## 多項式写像
+
+<Definition>
+  代数的集合 $X\subset\mathbb{A}^n$，$Y\subset\mathbb{A}^m$ の間の多項式写像 $\varphi:X\to Y$ とは，多項式 $F_1,\dots,F_m\in k[x_1,\dots,x_n]$ を用いて $\varphi(P)=(F_1(P),\dots,F_m(P))$ と書け，すべての $P\in X$ について $\varphi(P)\in Y$ となるような写像のことである．
+</Definition>
+
+<Definition>
+  多項式写像 $\varphi:X\to Y$ に対して，引き戻し
+
+  $$
+  \varphi^{*}:\Gamma(Y)\to\Gamma(X),\qquad \varphi^{*}(g)=g\circ\varphi
+  $$
+
+  は $k$ 代数準同型である．
+</Definition>
+
+<Theorem title="多項式写像と座標環の対応">
+  代数的集合 $X\subset\mathbb{A}^n$，$Y\subset\mathbb{A}^m$ について，対応 $\varphi\mapsto\varphi^{*}$ は，多項式写像 $X\to Y$ の全体と，$k$ 代数準同型 $\Gamma(Y)\to\Gamma(X)$ の全体との間の全単射を与える．
+</Theorem>
+
+<Proof>
+  $y_1,\dots,y_m\in\Gamma(Y)$ を，$\mathbb{A}^m$ の座標関数の $Y$ への制限とする．
+
+  単射性：$\varphi,\psi:X\to Y$ が $\varphi^{*}=\psi^{*}$ を満たすとする．$\varphi^{*}(y_i)=y_i\circ\varphi$ は $\varphi$ の第 $i$ 成分（$\Gamma(X)$ の元として）であり，$\psi^{*}(y_i)$ も同様である．$\varphi^{*}=\psi^{*}$ より，すべての $i$ について $\varphi$ と $\psi$ の第 $i$ 成分は $\Gamma(X)$ で等しく，したがって $X$ 上の関数として等しい．よって $\varphi=\psi$ である．
+
+  全射性：$k$ 代数準同型 $\theta:\Gamma(Y)\to\Gamma(X)$ を任意にとる．$f_i=\theta(y_i)\in\Gamma(X)$ とし，$f_i$ を代表する多項式 $F_i\in k[x_1,\dots,x_n]$ を一つずつ選ぶ．$\varphi(P)=(F_1(P),\dots,F_m(P))$ で $\varphi:X\to\mathbb{A}^m$ を定める．
+
+  $\varphi(X)\subset Y$ を示す．$g\in I(Y)$ とする．$\theta$ が $k$ 代数準同型であることから，$\Gamma(X)$ において
+
+  $$
+  \theta(\bar g)=g(\theta(y_1),\dots,\theta(y_m))=g(f_1,\dots,f_m)
+  $$
+
+  であり，これは $g(F_1,\dots,F_m)$ の $\Gamma(X)$ における像に等しい．$g\in I(Y)$ より $\bar g=0$ in $\Gamma(Y)$ なので，$\theta(\bar g)=0$ であり，$g(F_1,\dots,F_m)\in I(X)$ である．これはすべての $P\in X$ について $g(\varphi(P))=0$ を意味するので，$\varphi(X)\subset V(I(Y))=Y$ である．
+
+  こうして多項式写像 $\varphi:X\to Y$ が得られる．最後に $\varphi^{*}=\theta$ を示す．$\varphi^{*}(y_i)=F_i=f_i=\theta(y_i)$ であり，$y_1,\dots,y_m$ は $k$ 代数として $\Gamma(Y)$ を生成するので，$k$ 代数準同型として $\varphi^{*}=\theta$ である．
+</Proof>
+
+<Remark>
+  この対応は，圏論の言葉で言い換えられる．代数的集合と多項式写像のなす圏を $\mathcal{A}\mathit{lgSet}$，有限生成被約 $k$ 代数と $k$ 代数準同型のなす圏を $\mathcal{A}\mathit{lg}_k$ とすると，$X\mapsto\Gamma(X)$，$\varphi\mapsto\varphi^{*}$ は反変関手 $\Gamma:\mathcal{A}\mathit{lgSet}\to\mathcal{A}\mathit{lg}_k^{\rm op}$ を与える．今回示した対応の全単射性は，この関手がfully faithfulであることを意味する（第3回）．また，任意の有限生成被約 $k$ 代数がある座標環として実現できることから，essentially surjectiveでもある．したがって $\Gamma$ は圏同値を与える．
+
+  この圏同値が，代数幾何における「幾何」と「代数」を行き来する基本的な辞書である．
+</Remark>
+
+今回はここまでとする．次回は，多様体の次元や，局所的な性質（座標環の局所化）を扱う予定である．
+
+参考文献：W. Fulton, *Algebraic Curves: An Introduction to Algebraic Geometry*.
