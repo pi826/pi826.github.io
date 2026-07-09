@@ -1,0 +1,191 @@
+---
+title: "古典的代数幾何-Fultonを読んで-4：重複度・局所環・交点数"
+date: 2026-07-12T09:00:00.000Z
+tags: ["代数幾何", "Fulton", "交点数", "局所環"]
+description: "Fultonを読むシリーズ第4回．平面曲線の重複度と接線，点における局所環，そして二曲線の交点数の定義と基本性質についてまとめる．"
+draft: false
+---
+
+第1章では，アフィン代数的集合の一般論を見てきた．今回から第2章の内容に入り，平面曲線の局所的な性質，とくに重複度と交点数を扱う．今回もFultonの文章の翻訳ではなく独自のまとめであり，演習問題は掲載しない．
+
+以下，$k$ は代数的閉体とする．
+
+## 重複度と接線
+
+<Definition>
+  $F\in k[x,y]$ を $0$ でない多項式とし，$P=(a,b)\in\mathbb{A}^2$ とする．$G(x,y)=F(x+a,y+b)$ とおき，$G=G_0+G_1+\cdots+G_d$（$G_i$ は $i$ 次斉次成分，$d=\deg F$）と展開する．$G\neq0$ ならば，$G_m\neq0$ となる最小の $m$ を $F$ の $P$ における重複度といい，${\rm mult}_P(F)$ と書く．
+</Definition>
+
+<Remark>
+  ${\rm mult}_P(F)=0$ であることと $F(P)\neq0$ であることは同値である．$P\in V(F)$ のとき，${\rm mult}_P(F)\geq1$ である．${\rm mult}_P(F)=1$ のとき $P$ を $F$ の単純点，${\rm mult}_P(F)\geq2$ のとき $P$ を $F$ の重複点（特異点）という．
+</Remark>
+
+<Proposition title="接線">
+  上の記号で，最低次の斉次成分 $G_m$ は，$k$ 上 $m$ 個の $1$ 次形式の積に分解する：
+
+  $$
+  G_m=c\prod_{i=1}^{m}L_i,\qquad L_i=\beta_ix-\alpha_iy
+  $$
+
+  （$c\in k^\times$，重複を許す）．
+</Proposition>
+
+<Proof>
+  $G_m=\sum_{i=0}^mc_ix^iy^{m-i}$ と書く．$x^m$ の係数 $c_m\neq0$ の場合，$1$ 変数多項式 $q(t)=\sum_ic_it^i$（次数 $m$）は，$k$ が代数的閉体なので $q(t)=c_m\prod_i(t-\gamma_i)$ と分解する．このとき
+
+  $$
+  G_m(x,y)=y^mq(x/y)=c_m\prod_i(x-\gamma_iy)
+  $$
+
+  （右辺を展開すれば左辺に一致することが確かめられる恒等式）となり，主張の形が得られる．$c_m=0$ の場合は，$y$ で割り切れる回数だけ $L=y$ を因子として取り出し，残った部分に同じ議論を適用すればよい．
+</Proof>
+
+<Definition>
+  上の分解に現れる直線 $L_i(x-a,y-b)=0$（$P$ を通るように平行移動を戻したもの）を，$F$ の $P$ における接線という．${\rm mult}_P(F)=2$ のとき，接線が相異なるなら $P$ をnode，一致するなら $P$ をcuspという．
+</Definition>
+
+<Example title="node と cusp">
+  $F=y^2-x^2(x+1)$ は原点 $P=(0,0)$ で ${\rm mult}_P(F)=2$ であり，最低次成分は $y^2-x^2=(y-x)(y+x)$ なので，$P$ は相異なる接線 $y=x$，$y=-x$ をもつnodeである．
+
+  $F=y^2-x^3$ は原点で ${\rm mult}_P(F)=2$ であり，最低次成分は $y^2$（$1$ 次形式 $y$ の重複）なので，$P$ は接線 $y=0$（重複度 $2$）をもつcuspである．
+</Example>
+
+## 曲線の局所環
+
+<Definition>
+  $P\in\mathbb{A}^2$ とする．$P$ における局所環とは
+
+  $$
+  \mathcal{O}_P(\mathbb{A}^2)=\left\{\frac{F}{G}\ \middle|\ F,G\in k[x,y],\ G(P)\neq0\right\}\subset k(x,y)
+  $$
+
+  のことである．$\mathcal{O}_P(\mathbb{A}^2)$ の元を，$P$ で正則な有理関数という．
+</Definition>
+
+<Proposition>
+  $\mathcal{O}_P(\mathbb{A}^2)$ は，一意な極大イデアル
+
+  $$
+  \mathfrak{m}_P=\left\{\frac{F}{G}\in\mathcal{O}_P(\mathbb{A}^2)\ \middle|\ F(P)=0\right\}
+  $$
+
+  をもつ局所環である．
+</Proposition>
+
+<Proof>
+  $\mathfrak{m}_P$ がイデアルであることは容易に確かめられる．$F/G\notin\mathfrak{m}_P$（すなわち $F(P)\neq0$）ならば，$F(P)\neq0$ なので $G/F\in\mathcal{O}_P(\mathbb{A}^2)$ であり，これが $F/G$ の逆元である．したがって $\mathcal{O}_P(\mathbb{A}^2)\setminus\mathfrak{m}_P$ の元はすべて単元である．逆に単元は明らかに $\mathfrak{m}_P$ に属さない．したがって，$\mathfrak{m}_P$ が唯一の極大イデアルである（真のイデアルは単元を含めないので $\mathfrak{m}_P$ に含まれる）．
+</Proof>
+
+<Remark>
+  $\mathcal{O}_P(\mathbb{A}^2)$ は，$k[x,y]$ を極大イデアル $I(\{P\})=(x-a,y-b)$（第1回）で局所化した環にほかならない．
+</Remark>
+
+## 交点数の定義
+
+以下，$F,G\in k[x,y]$ は共通因子をもたないとする．第2回で見たように，このとき $V(F)\cap V(G)$ は有限集合である．
+
+<Definition>
+  $P\in\mathbb{A}^2$ における $F$ と $G$ の交点数を
+
+  $$
+  I(P;F,G)=\dim_k\mathcal{O}_P(\mathbb{A}^2)/(F,G)
+  $$
+
+  と定める．ここで $(F,G)$ は $\mathcal{O}_P(\mathbb{A}^2)$ において $F,G$ が生成するイデアルである．
+</Definition>
+
+<Remark>
+  $I(P;F,G)$ がつねに有限であることは，今回はここでは詳しく立ち入らない．$P\notin V(F)\cap V(G)$ のときに有限（実際 $0$）であることは次の命題で見るが，$P\in V(F)\cap V(G)$ のときに有限であることの一般的な証明には，局所環のより精密な理論（次数付き環との比較など）が必要であり，今後の回で必要に応じて扱う．
+</Remark>
+
+<Proposition title="根基による計算例">
+  $V(F)\cap V(G)=\{P_1,\dots,P_r\}$（相異なる点）とすると，
+
+  $$
+  \dim_k k[x,y]/\sqrt{(F,G)}=r
+  $$
+
+  である．
+</Proposition>
+
+<Proof>
+  強形のNullstellensatz（第2回）より $\sqrt{(F,G)}=I(V(F,G))=I(\{P_1,\dots,P_r\})=\bigcap_iI(\{P_i\})$ である．異なる点の極大イデアル $I(\{P_i\})$ は互いに素（comaximal）なので，中国剰余定理より
+
+  $$
+  k[x,y]/\sqrt{(F,G)}\cong\prod_{i=1}^rk[x,y]/I(\{P_i\})\cong k^r
+  $$
+
+  であり，これは $k$ 上次元 $r$ である．
+</Proof>
+
+<Remark>
+  この命題は，各交点にちょうど重複度 $1$ を割り当てたときの「総交点数」が $r$ であることを示している．しかし実際の $I(P;F,G)$ は，接線が接するなど交点が「縮退」している場合には $1$ より大きくなりうる．$(F,G)$ ではなく $\sqrt{(F,G)}$ を使ってしまうと，このような重複度の情報が失われてしまう．次のcuspの例で見るように，$(F,G)$ を直接使うことが重要である．
+</Remark>
+
+## 交点数の性質
+
+<Theorem title="交点数の基本性質">
+  $F,G,H\in k[x,y]$ は，登場する組がそれぞれ共通因子をもたないとする．$P\in\mathbb{A}^2$ とする．
+
+  (i) $I(P;F,G)=I(P;G,F)$．
+
+  (ii) $I(P;F,G)\geq0$ であり，$I(P;F,G)=0$ であることと $P\notin V(F)\cap V(G)$ であることは同値である．
+
+  (iii) ${\rm mult}_P(F)\cdot{\rm mult}_P(G)\leq I(P;F,G)$ であり，等号は $F$ と $G$ が $P$ で共通の接線をもたないときに限り成り立つ．
+
+  (iv) $I(P;F,GH)=I(P;F,G)+I(P;F,H)$．
+
+  (v) $T:\mathbb{A}^2\to\mathbb{A}^2$ をアフィン座標変換とすると，$I(T(P);F,G)=I(P;F\circ T,G\circ T)$．
+</Theorem>
+
+<Proof>
+  (i) は定義から明らかである．
+
+  (ii) を示す．$P\notin V(F)\cap V(G)$ なら，$F(P)\neq0$ または $G(P)\neq0$ である．いずれかが単元になるので，イデアル $(F,G)$ は $\mathcal{O}_P(\mathbb{A}^2)$ 全体に一致し，商は $0$，すなわち $I(P;F,G)=0$ である．逆に $P\in V(F)\cap V(G)$ なら，$F,G\in\mathfrak{m}_P$ なので $(F,G)\subset\mathfrak{m}_P$ であり，これは真のイデアルである．したがって商 $\mathcal{O}_P(\mathbb{A}^2)/(F,G)$ は $0$ でない環であり，$k$ 上の次元は少なくとも $1$ である．
+
+  (iv) を示す．$A=\mathcal{O}_P(\mathbb{A}^2)$ と書く．$(F,GH)\subset(F,G)$ なので，自然な全射 $A/(F,GH)\twoheadrightarrow A/(F,G)$ があり，その核は $(F,G)/(F,GH)$ である．写像
+
+  $$
+  A/(F,H)\to(F,G)/(F,GH),\qquad \bar a\mapsto\overline{aG}
+  $$
+
+  を考える．$a=fF+hH\in(F,H)$ なら $aG=fFG+hHG\in(F)+(GH)\subset(F,GH)$ なので，この写像は well-defined である．
+
+  全射性：$(F,G)$ の元は $\alpha F+\beta G$（$\alpha,\beta\in A$）の形だが，$\alpha F\in(F,GH)$ なので，$(F,G)/(F,GH)$ の元は $\overline{\beta G}$（$\beta\in A$）の形にいつも書ける．よって全射である．
+
+  単射性：$aG\in(F,GH)$，すなわち $aG=\phi F+\psi GH$（$\phi,\psi\in A$）とする．整理すると $G(a-\psi H)=\phi F$ である．$F,G$ は $k[x,y]$ で共通因子をもたないので，$\mathcal{O}_P(\mathbb{A}^2)$（$k[x,y]$ の局所化であり，やはりUFDである）でも共通因子をもたない．したがって $F\mid(a-\psi H)$ であり，$a-\psi H=\chi F$（$\chi\in A$），すなわち $a=\chi F+\psi H\in(F,H)$ である．よって核はちょうど $(F,H)$ であり，写像は単射である．
+
+  したがって $A/(F,H)\cong(F,G)/(F,GH)$ であり，完全列
+
+  $$
+  0\to(F,G)/(F,GH)\to A/(F,GH)\to A/(F,G)\to0
+  $$
+
+  の次元を数えると
+
+  $$
+  I(P;F,GH)=\dim_kA/(F,GH)=\dim_kA/(F,H)+\dim_kA/(F,G)=I(P;F,H)+I(P;F,G)
+  $$
+
+  を得る．
+
+  (v) を示す．第3回で見た多項式写像と座標環の対応により，$T$ はアフィン同型 $\mathbb{A}^2\to\mathbb{A}^2$ なので，引き戻し $T^{*}$ は $k$ 代数同型 $\mathcal{O}_{T(P)}(\mathbb{A}^2)\to\mathcal{O}_P(\mathbb{A}^2)$ を誘導する．これは $F,G$ をそれぞれ $F\circ T,G\circ T$ に，イデアル $(F,G)$ をイデアル $(F\circ T,G\circ T)$ に対応させるので，商の次元は変わらない．
+
+  (iii) の証明には，局所環を極大イデアルの冪で filtration したときの次数付き環（associated graded ring）を調べる必要があり，今回の範囲を超えるので省略する．今後，必要な場面で改めて証明する．
+</Proof>
+
+<Example title="cuspにおける交点数">
+  $F=y^2-x^3$（原点でcusp，接線 $y=0$ の重複度 $2$），$G=y$（接線 $y=0$ 自身）とする．$\mathcal{O}_0(\mathbb{A}^2)/(F,G)$ を考えると，$G=y$ で割った関係 $y=0$ を代入すれば $F\equiv-x^3$ となるので，
+
+  $$
+  \mathcal{O}_0(\mathbb{A}^2)/(F,G)\cong\mathcal{O}_0(\mathbb{A}^1)/(x^3)
+  $$
+
+  であり，これは $k$ 上 $1,x,x^2$ を基底とする $3$ 次元の空間である．よって $I(0;F,G)=3$ である．
+
+  一方 ${\rm mult}_0(F)\cdot{\rm mult}_0(G)=2\cdot1=2$ であり，$F,G$ は共通の接線 $y=0$ をもつので，(iii) の不等号は真に成り立っている（$3>2$）．このように，接線が一致する「接する」交わりでは，交点数が単純な重複度の積より真に大きくなる．
+</Example>
+
+今回はここまでとする．次回は，射影平面と射影曲線への準備を進める予定である．
+
+参考文献：W. Fulton, *Algebraic Curves: An Introduction to Algebraic Geometry*.
