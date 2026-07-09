@@ -1,0 +1,184 @@
+---
+title: "古典的代数幾何-Fultonを読んで-1：アフィン代数的集合とHilbertの基底定理"
+date: 2026-07-09T15:00:00.000Z
+tags: ["代数幾何", "Fulton", "アフィン代数的集合", "Hilbertの基底定理"]
+description: "Fultonの Algebraic Curves を読みながら，内容を自分の言葉でまとめていく新シリーズ．今回は，アフィン代数的集合，点集合のイデアル，Hilbertの基底定理についてまとめる．"
+draft: false
+---
+
+Fultonの教科書 *Algebraic Curves: An Introduction to Algebraic Geometry* を読みながら，内容を自分の言葉で再構成してまとめていく新シリーズを始める．原文の翻訳ではなく，扱われている数学的内容を自分の文体でまとめ直したものである．演習問題は掲載しない．
+
+今回は，アフィン代数的集合，点集合のイデアル，Hilbertの基底定理についてまとめる．
+
+以下，$k$ を代数的閉体とする．代数的閉体という仮定は，今回扱う範囲ではほとんど使わないが，このシリーズを通しての約束としておく．次回以降，Nullstellensatzを扱うところで本質的に必要になる．
+
+## アフィン空間と代数的集合
+
+<Definition>
+  $n$ 次元アフィン空間 $\mathbb{A}^n$ とは，集合として $k^n$ のことである．$\mathbb{A}^n$ の元を点という．
+</Definition>
+
+<Definition>
+  $T\subset k[x_1,\dots,x_n]$ を多項式の集合とする．$T$ の零点集合とは
+
+  $$
+  V(T)=\{P\in\mathbb{A}^n\mid f(P)=0\ \text{for all}\ f\in T\}
+  $$
+
+  のことである．$\mathbb{A}^n$ の部分集合 $X$ が代数的集合であるとは，ある $T$ について $X=V(T)$ となることをいう．
+</Definition>
+
+<Proposition>
+  次が成り立つ．
+
+  (i) $T\subset T'$ ならば $V(T)\supset V(T')$ である．
+
+  (ii) $(T)$ を $T$ が生成するイデアルとすると，$V(T)=V((T))$ である．
+
+  (iii) $V(0)=\mathbb{A}^n$ であり，$V(k[x_1,\dots,x_n])=\emptyset$ である．
+
+  (iv) イデアル $I_1,I_2$ について，$V(I_1)\cup V(I_2)=V(I_1I_2)=V(I_1\cap I_2)$ である．
+
+  (v) イデアルの族 $\{I_\alpha\}$ について，$\bigcap_\alpha V(I_\alpha)=V\left(\sum_\alpha I_\alpha\right)$ である．
+</Proposition>
+
+<Proof>
+  (i)，(iii)，(v) は定義から直接従う．例えば (v) は，$P\in\bigcap_\alpha V(I_\alpha)$ であることが，すべての $\alpha$ とすべての $f\in I_\alpha$ について $f(P)=0$ であることと同値であり，これは $P$ が $\sum_\alpha I_\alpha$ のすべての元で消えることと同じであることからわかる．
+
+  (ii) は，$f\in(T)$ が $T$ の元の $k[x_1,\dots,x_n]$ 係数線形結合で書けることと，$P\in V(T)$ ならすべての $T$ の元の線形結合も $P$ で消えることから，$V(T)=V((T))$ が従う．
+
+  (iv) を示す．$V(I_1)\cup V(I_2)\subset V(I_1I_2)$ は，$P\in V(I_1)$ なら任意の $f\in I_1,g\in I_2$ について $(fg)(P)=f(P)g(P)=0$ となることからわかる．逆に $P\notin V(I_1)\cup V(I_2)$ とすると，$f(P)\neq0$ となる $f\in I_1$ と $g(P)\neq0$ となる $g\in I_2$ が取れる．$k$ は体なので $(fg)(P)=f(P)g(P)\neq0$ であり，$fg\in I_1I_2$ だから $P\notin V(I_1I_2)$ である．よって $V(I_1I_2)\subset V(I_1)\cup V(I_2)$ でもある．$I_1I_2\subset I_1\cap I_2$ であることと (i) から $V(I_1\cap I_2)\subset V(I_1I_2)$ であり，一方 $I_1\cap I_2\subset I_1,I_2$ から $V(I_1\cap I_2)\supset V(I_1)\cup V(I_2)$ である．合わせて $V(I_1)\cup V(I_2)=V(I_1I_2)=V(I_1\cap I_2)$ を得る．
+</Proof>
+
+<Remark>
+  この命題は，代数的集合全体が $\mathbb{A}^n$ のある位相の閉集合系をなすことを意味している．これを Zariski 位相という．有限和と任意個の共通部分について閉じていること，全体と空集合が代数的集合であることが，ちょうど閉集合系の公理である．
+</Remark>
+
+<Example title="A^2 の代数的集合">
+  $\mathbb{A}^2$ における代数的集合の例をいくつか挙げる．
+
+  - $V(y-x^2)$ は放物線である．
+  - $V(xy-1)$ は双曲線である．
+  - $V(x-a,y-b)=\{(a,b)\}$ は一点である．
+  - $V(x)\cup V(y)=V(xy)$ は座標軸の和集合である（上の命題 (iv) の具体例）．
+</Example>
+
+## 点集合のイデアル
+
+<Definition>
+  $X\subset\mathbb{A}^n$ とする．$X$ のイデアルとは
+
+  $$
+  I(X)=\{f\in k[x_1,\dots,x_n]\mid f(P)=0\ \text{for all}\ P\in X\}
+  $$
+
+  のことである．
+</Definition>
+
+<Proposition>
+  次が成り立つ．
+
+  (i) $I(X)$ は $k[x_1,\dots,x_n]$ のイデアルである．
+
+  (ii) $X\subset Y$ ならば $I(X)\supset I(Y)$ である．
+
+  (iii) 任意の $X$ について $X\subset V(I(X))$ であり，任意の $T$ について $T\subset I(V(T))$ である．
+
+  (iv) 任意の $T$ について $V(I(V(T)))=V(T)$ であり，任意の $X$ について $I(V(I(X)))=I(X)$ である．
+</Proposition>
+
+<Proof>
+  (i)，(ii)，(iii) は定義から直接確かめられる．
+
+  (iv) を示す．(iii) の $X\subset V(I(X))$ に $X=V(T)$ を代入すると $V(T)\subset V(I(V(T)))$ を得る．一方，(iii) の $T\subset I(V(T))$ の両辺に $V(-)$ を施すと，(ii) の逆向きの性質（$V$ が包含を逆にすること）より $V(T)\supset V(I(V(T)))$ を得る．合わせて $V(T)=V(I(V(T)))$ である．$I(V(I(X)))=I(X)$ も同様である．
+</Proof>
+
+<Proposition>
+  $X\subset\mathbb{A}^n$ とする．$I(X)$ は根基イデアルである．すなわち，ある $n\geq1$ について $f^n\in I(X)$ ならば $f\in I(X)$ である．
+</Proposition>
+
+<Proof>
+  $f^n\in I(X)$ とすると，任意の $P\in X$ について $f(P)^n=f^n(P)=0$ である．$k$ は体なので零因子をもたず，$f(P)^n=0$ から $f(P)=0$ が従う．これがすべての $P\in X$ について成り立つので $f\in I(X)$ である．
+</Proof>
+
+<Example title="一点のイデアル">
+  $P=(a_1,\dots,a_n)\in\mathbb{A}^n$ とする．このとき
+
+  $$
+  I(\{P\})=(x_1-a_1,\dots,x_n-a_n)
+  $$
+
+  である．実際，各 $x_i-a_i$ は $P$ で消えるので $\supset$ は明らかである．逆に，$k[x_1,\dots,x_n]/(x_1-a_1,\dots,x_n-a_n)\cong k$（$x_i\mapsto a_i$ で与えられる同型）であるから，イデアル $(x_1-a_1,\dots,x_n-a_n)$ は極大イデアルである．$I(\{P\})$ はこれを含む真のイデアル（$1\notin I(\{P\})$ なので真である）だから，極大性より両者は一致する．
+</Example>
+
+## Hilbertの基底定理
+
+<Definition>
+  可換環 $R$ が Noetherian であるとは，$R$ のすべてのイデアルが有限生成であることをいう．
+</Definition>
+
+<Proposition>
+  可換環 $R$ について，次は同値である．
+
+  (i) $R$ は Noetherian である．
+
+  (ii) $R$ のイデアルの任意の上昇列 $I_1\subset I_2\subset\cdots$ は，ある番号から先で一定になる（上昇列条件，ACC）．
+</Proposition>
+
+<Proof>
+  (i)$\Rightarrow$(ii)：上昇列 $I_1\subset I_2\subset\cdots$ をとる．$I=\bigcup_nI_n$ はイデアルである．仮定より $I$ は有限生成，例えば $f_1,\dots,f_r$ で生成されるとする．各 $f_i$ はある $I_{n_i}$ に属するので，$N=\max_in_i$ とおくと，すべての $f_i$ は $I_N$ に属する．したがって $I=(f_1,\dots,f_r)\subset I_N\subset I$ となり，$I_N=I$ である．よって $n\geq N$ で $I_n=I_N$ となり列は一定になる．
+
+  (ii)$\Rightarrow$(i)：ある イデアル $I$ が有限生成でないとする．$f_1\in I$ を任意にとり，$I_1=(f_1)$ とする．$I_1\neq I$ なので $f_2\in I\setminus I_1$ がとれ，$I_2=(f_1,f_2)$ とする．これを繰り返すと，$I$ が有限生成でないことから各段階で $I_n\neq I$ なので $f_{n+1}\in I\setminus I_n$ がとれ，真に増大する列 $I_1\subsetneq I_2\subsetneq\cdots$ が得られる．これは ACC に反する．
+</Proof>
+
+<Theorem title="Hilbertの基底定理">
+  $R$ が Noetherian ならば，多項式環 $R[x]$ も Noetherian である．
+</Theorem>
+
+<Proof>
+  $J\subset R[x]$ をイデアルとする．$J=0$ なら明らかなので，$J\neq0$ とする．
+
+  各 $d\geq0$ について，
+
+  $$
+  L_d=\{a\in R\mid a\ \text{は次数}\ d\ \text{の}\ J\ \text{のある元の最高次係数}\}\cup\{0\}
+  $$
+
+  とおく．$L_d$ は $R$ のイデアルである．実際，$a,b\in L_d$ がそれぞれ $f,g\in J$（次数 $d$）の最高次係数なら，$a+b\neq0$ のとき $a+b$ は $f+g\in J$（次数 $d$ 以下だが，最高次係数が打ち消し合わなければ次数 $d$）の最高次係数であり，$r\in R$ について $ra\neq0$ のとき $ra$ は $rf\in J$ の最高次係数である．
+
+  また $f\in J$ の次数が $d$ で最高次係数が $a$ なら，$xf\in J$ の次数は $d+1$ で最高次係数も $a$ だから，$L_d\subset L_{d+1}$ である．こうして上昇列 $L_0\subset L_1\subset\cdots$ が得られ，$R$ が Noetherian なので，ある $N$ で $L_d=L_N$（$d\geq N$）となる．
+
+  各 $d=0,1,\dots,N$ について，$R$ が Noetherian なので $L_d$ は有限生成であり，生成元を $a_{d,1},\dots,a_{d,k_d}$ とする．各 $a_{d,i}$ を最高次係数にもつ次数 $d$ の元 $f_{d,i}\in J$ を一つずつ選んでおく．
+
+  $J'=(f_{d,i}\mid0\leq d\leq N,\ 1\leq i\leq k_d)$ とおく．明らかに $J'\subset J$ である．$J\subset J'$ を，$g\in J$ の次数 $m$ に関する帰納法で示す．
+
+  $m>N$ のとき，$g$ の最高次係数 $a$ は $L_m=L_N$ に属するので，$a=\sum_ir_ia_{N,i}$（$r_i\in R$）と書ける．
+
+  $$
+  h=g-\sum_ir_ix^{m-N}f_{N,i}
+  $$
+
+  とおくと，右辺第二項の次数 $m$ の係数はちょうど $a$ なので，$h\in J$ の次数は $m$ 未満である．$m\leq N$ のときも同様に，$g$ の最高次係数 $a\in L_m$ を $a=\sum_ir_ia_{m,i}$ と書き，$h=g-\sum_ir_if_{m,i}$ とおけば，$h\in J$ の次数は $m$ 未満である．
+
+  いずれの場合も，帰納法の仮定より $h\in J'$ である．$g=h+\left(\text{Jの元}\right)$ と $J'$ の元の和で書けるので $g\in J'$ である．次数が最小の場合（あるいは $g=0$ の場合）は自明に $J'$ に属するので，これが帰納法の基点になる．
+
+  したがって $J=J'$ は有限生成であり，$R[x]$ は Noetherian である．
+</Proof>
+
+<Proposition>
+  $k[x_1,\dots,x_n]$ は Noetherian である．
+</Proposition>
+
+<Proof>
+  $k$ は体なので，イデアルは $(0)$ と $k$ のみであり，どちらも有限生成である．よって $k$ は Noetherian である．Hilbert の基底定理を $n$ 回適用すると，$k[x_1]$，$k[x_1,x_2]$，……，$k[x_1,\dots,x_n]$ の順に Noetherian であることがわかる．
+</Proof>
+
+<Remark>
+  この命題から，任意の代数的集合 $V(T)$ について，$T$ が生成するイデアル $(T)$ は有限生成であり，$V(T)=V((T))$ は有限個の多項式 $f_1,\dots,f_r$ を用いて $V(f_1,\dots,f_r)$ と書ける．すなわち，代数的集合はつねに有限個の方程式で定義できる．
+
+  また，$I(V(T))\supset T$ が実際には $(T)$ の根基 $\sqrt{(T)}$ に一致するというのが Nullstellensatz であり，これは $k$ が代数的閉体であることを本質的に使う．この定理は次回以降で扱う．
+</Remark>
+
+今回はここまでとする．次回は，既約成分への分解（Fulton §1.4 相当）を予定している．
+
+参考文献：W. Fulton, *Algebraic Curves: An Introduction to Algebraic Geometry*.
